@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PlayfulShapes } from "@/components/PlayfulShapes";
 import { getThemeFromCookie, type Theme } from "@/lib/theme";
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default async function RootLayout({
           Skip to main content
         </a>
         <ThemeProvider initialTheme={theme}>
+          <PlayfulShapes />
           <Header />
           <main id="main-content">
             {children}

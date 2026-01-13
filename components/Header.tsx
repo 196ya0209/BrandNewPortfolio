@@ -42,7 +42,7 @@ export function Header() {
           ${isScrolled ? 'navbar-scrolled' : ''}
         `}
         style={{
-          backgroundColor: 'rgba(var(--background-rgb), 0.7)',
+          backgroundColor: 'rgba(var(--background-rgb), 0.3)',
           borderColor: 'var(--border)',
         }}
       >
