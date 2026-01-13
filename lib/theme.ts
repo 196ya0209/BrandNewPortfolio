@@ -10,8 +10,11 @@ export function getThemeFromCookie(cookieString?: string): Theme | null {
   if (!cookieString) return null;
   
   const cookies = cookieString.split(';').reduce((acc, cookie) => {
-    const [key, value] = cookie.trim().split('=');
-    acc[key] = value;
+    const parts = cookie.trim().split('=');
+    if (parts.length === 2) {
+      const [key, value] = parts;
+      acc[key] = value;
+    }
     return acc;
   }, {} as Record<string, string>);
   

@@ -1,6 +1,6 @@
 # BrandNewPortfolio
 
-A modern, dual-mode portfolio platform built with Next.js 14 (App Router) and TypeScript. Features a unique theme system that switches between Professional and Playful modes, with full accessibility support and performance optimization.
+A modern, dual-mode portfolio platform built with Next.js 16 (App Router) and TypeScript. Features a unique theme system that switches between Professional and Playful modes, with full accessibility support and performance optimization.
 
 ## 🎨 Project Vision
 
