@@ -47,13 +47,6 @@ export function Header() {
         }}
       >
         <div className="flex items-center gap-6">
-          <Link
-            href="/"
-            className="text-lg font-bold whitespace-nowrap"
-            style={{ color: 'var(--foreground)' }}
-          >
-            BNP
-          </Link>
           <ul className="hidden md:flex items-center gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
