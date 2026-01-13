@@ -1,43 +1,204 @@
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-4xl mx-auto">
-        <h1
-          className="text-5xl font-bold mb-6"
-          style={{ color: 'var(--foreground)' }}
-        >
-          Welcome to BrandNewPortfolio
-        </h1>
-        <p
-          className="text-xl mb-8 leading-relaxed"
-          style={{ color: 'var(--secondary)' }}
-        >
-          A dual-mode portfolio platform that adapts to your mood. Switch between
-          Professional and Playful themes using the toggle above.
-        </p>
-        <div
-          className="p-8 rounded-lg border-2"
-          style={{
-            backgroundColor: 'var(--card-bg)',
-            borderColor: 'var(--border)',
-          }}
-        >
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-24 md:py-32">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1
+            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+            style={{ color: 'var(--foreground)' }}
+          >
+            Welcome to BrandNewPortfolio
+          </h1>
+          <p
+            className="text-xl md:text-2xl mb-12 leading-relaxed"
+            style={{ color: 'var(--secondary)' }}
+          >
+            A dual-mode portfolio platform that adapts to your mood. Switch between
+            Professional and Playful themes using the toggle above.
+          </p>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-4xl mx-auto">
           <h2
-            className="text-2xl font-semibold mb-4"
+            className="text-3xl md:text-4xl font-bold mb-12 text-center"
             style={{ color: 'var(--foreground)' }}
           >
             Features
           </h2>
-          <ul className="space-y-3" style={{ color: 'var(--foreground)' }}>
-            <li>✨ Dual-mode theme system (Professional & Playful)</li>
-            <li>♿ Full accessibility support with keyboard navigation</li>
-            <li>🎨 Brutalist color scheme in Playful mode</li>
-            <li>💾 Theme preference persisted across visits</li>
-            <li>⚡ No hydration flash - server-side theme detection</li>
-            <li>🎯 Skip-to-content link for screen readers</li>
-          </ul>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div
+              className="p-8 rounded-xl border-2 hover:shadow-lg transition-shadow"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border)',
+              }}
+            >
+              <div className="text-4xl mb-4">✨</div>
+              <h3
+                className="text-xl font-semibold mb-3"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Dual-Mode Themes
+              </h3>
+              <p style={{ color: 'var(--secondary)' }}>
+                Switch between Professional and Playful themes to match your mood and context.
+              </p>
+            </div>
+
+            <div
+              className="p-8 rounded-xl border-2 hover:shadow-lg transition-shadow"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border)',
+              }}
+            >
+              <div className="text-4xl mb-4">♿</div>
+              <h3
+                className="text-xl font-semibold mb-3"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Fully Accessible
+              </h3>
+              <p style={{ color: 'var(--secondary)' }}>
+                Complete keyboard navigation support and screen reader friendly design.
+              </p>
+            </div>
+
+            <div
+              className="p-8 rounded-xl border-2 hover:shadow-lg transition-shadow"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border)',
+              }}
+            >
+              <div className="text-4xl mb-4">🎨</div>
+              <h3
+                className="text-xl font-semibold mb-3"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Minimal & Colorful
+              </h3>
+              <p style={{ color: 'var(--secondary)' }}>
+                Clean design with vibrant colors that don&apos;t overwhelm.
+              </p>
+            </div>
+
+            <div
+              className="p-8 rounded-xl border-2 hover:shadow-lg transition-shadow"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border)',
+              }}
+            >
+              <div className="text-4xl mb-4">💾</div>
+              <h3
+                className="text-xl font-semibold mb-3"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Persistent Preferences
+              </h3>
+              <p style={{ color: 'var(--secondary)' }}>
+                Your theme choice is saved and remembered across visits.
+              </p>
+            </div>
+
+            <div
+              className="p-8 rounded-xl border-2 hover:shadow-lg transition-shadow"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border)',
+              }}
+            >
+              <div className="text-4xl mb-4">⚡</div>
+              <h3
+                className="text-xl font-semibold mb-3"
+                style={{ color: 'var(--foreground)' }}
+              >
+                No Flash
+              </h3>
+              <p style={{ color: 'var(--secondary)' }}>
+                Server-side theme detection prevents any hydration flash on load.
+              </p>
+            </div>
+
+            <div
+              className="p-8 rounded-xl border-2 hover:shadow-lg transition-shadow"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border)',
+              }}
+            >
+              <div className="text-4xl mb-4">🎯</div>
+              <h3
+                className="text-xl font-semibold mb-3"
+                style={{ color: 'var(--foreground)' }}
+              >
+                Modern Stack
+              </h3>
+              <p style={{ color: 'var(--secondary)' }}>
+                Built with Next.js 16, TypeScript, and Tailwind CSS 4.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* About Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-4xl mx-auto">
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+            style={{ color: 'var(--foreground)' }}
+          >
+            About This Project
+          </h2>
+          <div
+            className="p-12 rounded-xl border-2"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--border)',
+            }}
+          >
+            <p
+              className="text-lg leading-relaxed mb-6"
+              style={{ color: 'var(--foreground)' }}
+            >
+              BrandNewPortfolio is designed to be a complete portfolio platform that adapts
+              to different contexts and moods. Whether you&apos;re presenting work to potential
+              clients or showcasing your creative side, this platform has you covered.
+            </p>
+            <p
+              className="text-lg leading-relaxed"
+              style={{ color: 'var(--secondary)' }}
+            >
+              Future sprints will add a rich text editor, database integration, content
+              management features, and more. Stay tuned for updates!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 py-24 md:py-32">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-6"
+            style={{ color: 'var(--foreground)' }}
+          >
+            Ready to Explore?
+          </h2>
+          <p
+            className="text-lg mb-8"
+            style={{ color: 'var(--secondary)' }}
+          >
+            Try switching between themes to see how the design adapts.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

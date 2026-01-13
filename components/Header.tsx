@@ -18,9 +18,9 @@ export function Header() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b-2"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b"
       style={{
-        backgroundColor: 'var(--background)',
+        backgroundColor: 'rgba(var(--background-rgb, 255, 255, 255), 0.8)',
         borderColor: 'var(--border)',
       }}
     >

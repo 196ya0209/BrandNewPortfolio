@@ -1,8 +1,10 @@
+@import url('https://api.fontshare.com/v2/css?f[]=nohemi@400,500,600,700&display=swap');
 @import "tailwindcss";
 
 /* Theme CSS Variables - Professional is default */
 html[data-theme="professional"] {
   --background: #ffffff;
+  --background-rgb: 255, 255, 255;
   --foreground: #0a0a0a;
   --primary: #2563eb;
   --secondary: #64748b;
@@ -14,16 +16,17 @@ html[data-theme="professional"] {
 }
 
 html[data-theme="playful"] {
-  /* Brutalist colors - high contrast, loud accents */
-  --background: #ffff00;
-  --foreground: #000000;
-  --primary: #ff0080;
-  --secondary: #00ff00;
-  --accent: #00ffff;
-  --muted: #ffccff;
-  --border: #000000;
+  /* Minimal colorful palette - soft and vibrant */
+  --background: #fef7ee;
+  --background-rgb: 254, 247, 238;
+  --foreground: #1a1a1a;
+  --primary: #ff6b6b;
+  --secondary: #4ecdc4;
+  --accent: #ffa500;
+  --muted: #fff5e6;
+  --border: #ffd6a5;
   --card-bg: #ffffff;
-  --card-border: #000000;
+  --card-border: #ffd6a5;
 }
 
 @theme inline {
@@ -39,7 +42,7 @@ html[data-theme="playful"] {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Nohemi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   transition-property: background-color, color;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;

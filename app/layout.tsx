@@ -23,13 +23,13 @@ export default async function RootLayout({
 
   return (
     <html lang="en" data-theme={theme}>
-      <body className="antialiased flex flex-col min-h-screen">
+      <body className="antialiased">
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
         <ThemeProvider initialTheme={theme}>
           <Header />
-          <main id="main-content" className="flex-1">
+          <main id="main-content" className="pt-20">
             {children}
           </main>
           <Footer />
