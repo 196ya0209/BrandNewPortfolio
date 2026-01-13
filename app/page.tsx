@@ -1,24 +1,10 @@
+import { Hero3D } from '@/components/Hero3D';
+
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 py-24 md:py-32">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1
-            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
-            style={{ color: 'var(--foreground)' }}
-          >
-            Welcome to BrandNewPortfolio
-          </h1>
-          <p
-            className="text-xl md:text-2xl mb-12 leading-relaxed"
-            style={{ color: 'var(--secondary)' }}
-          >
-            A dual-mode portfolio platform that adapts to your mood. Switch between
-            Professional and Playful themes using the toggle above.
-          </p>
-        </div>
-      </section>
+      {/* 3D Animated Hero Section */}
+      <Hero3D />
 
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
