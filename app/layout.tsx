@@ -29,7 +29,7 @@ export default async function RootLayout({
         </a>
         <ThemeProvider initialTheme={theme}>
           <Header />
-          <main id="main-content" className="pt-20">
+          <main id="main-content" className="pt-24">
             {children}
           </main>
           <Footer />
