@@ -20,7 +20,7 @@ export function Header() {
     <header
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b"
       style={{
-        backgroundColor: 'rgba(var(--background-rgb, 255, 255, 255), 0.8)',
+        backgroundColor: 'rgba(var(--background-rgb), 0.8)',
         borderColor: 'var(--border)',
       }}
     >
