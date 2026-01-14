@@ -9,20 +9,27 @@ export function LoadingScreen() {
 
   useEffect(() => {
     // Simulate loading progress
-    const interval = setInterval(() => {
+    const intervalId = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(interval);
-          // Wait a bit before hiding the loading screen
-          setTimeout(() => setIsLoading(false), 500);
           return 100;
         }
         return prev + 2;
       });
     }, 30);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
+
+  useEffect(() => {
+    if (progress >= 100) {
+      // Wait a bit before hiding the loading screen
+      const timeout = setTimeout(() => setIsLoading(false), 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [progress]);
 
   return (
     <AnimatePresence>

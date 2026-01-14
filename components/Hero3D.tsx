@@ -39,7 +39,7 @@ export function Hero3D() {
         {/* Animated Name - Much Larger */}
         <div className="mb-12">
           <h1
-            className="text-8xl md:text-[12rem] lg:text-[14rem] font-bold mb-8 leading-[0.9] overflow-hidden"
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[12rem] font-bold mb-8 leading-[0.9] overflow-hidden"
             style={{ fontFamily: 'var(--hero-font)' }}
           >
             {characters.map((char, index) => (
