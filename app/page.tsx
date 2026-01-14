@@ -1,11 +1,15 @@
 import { Hero3D } from '@/components/Hero3D';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { StackingCards } from '@/components/StackingCards';
 
 export default function Home() {
   return (
     <div className="min-h-screen">
       {/* 3D Animated Hero Section */}
       <Hero3D />
+
+      {/* Stacking Cards Projects Section */}
+      <StackingCards />
 
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
