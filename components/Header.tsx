@@ -39,13 +39,15 @@ export function Header() {
         mass: 1,
         duration: 0.8,
       }}
-      className="fixed top-0 left-0 right-0 z-50"
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4"
     >
       <nav
         className={`
           backdrop-blur-lg
-          border-b
-          shadow-sm
+          rounded-full
+          px-6 py-2.5
+          border
+          shadow-lg
           transition-all
           duration-300
           ${isScrolled ? 'navbar-scrolled' : ''}
@@ -55,30 +57,26 @@ export function Header() {
           borderColor: 'var(--border)',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14">
-            <ul className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={`text-sm font-medium transition-all hover:scale-105 ${
-                      pathname === link.href ? 'active-link' : ''
-                    }`}
-                    style={{
-                      color: pathname === link.href ? 'var(--primary)' : 'var(--foreground)',
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="flex items-center">
-              <ThemeToggle />
-            </div>
-          </div>
-        </div>
+        <ul className="flex items-center gap-6">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`text-sm font-medium transition-all hover:scale-105 ${
+                  pathname === link.href ? 'active-link' : ''
+                }`}
+                style={{
+                  color: pathname === link.href ? 'var(--primary)' : 'var(--foreground)',
+                }}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+          <li className="border-l pl-4" style={{ borderColor: 'var(--border)' }}>
+            <ThemeToggle />
+          </li>
+        </ul>
       </nav>
     </motion.header>
   );
