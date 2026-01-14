@@ -34,7 +34,7 @@ export function Hero3D() {
   const characters = name.split('');
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex items-center justify-center">
+    <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex items-center justify-center pt-14">
       <div className="max-w-6xl mx-auto text-center px-4 z-10">
         {/* Animated Name */}
         <div className="mb-8">
