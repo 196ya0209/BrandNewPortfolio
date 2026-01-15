@@ -29,6 +29,9 @@ const fragmentShader = `
   uniform vec2 uResolution;
   varying vec2 vUv;
   
+  // Distortion intensity multiplier
+  const float DISTORTION_MULTIPLIER = 1.5;
+  
   void main() {
     vec2 uv = vUv;
     
@@ -36,23 +39,25 @@ const fragmentShader = `
     vec2 mousePos = uMouse;
     float dist = distance(uv, mousePos);
     
-    // Liquid wave parameters
-    float waveStrength = 0.03 * uHover;
-    float waveFrequency = 15.0;
-    float waveSpeed = 2.0;
+    // Liquid wave parameters - tighter and more aggressive
+    float waveStrength = 0.08 * uHover;
+    float waveFrequency = 25.0;
+    float waveSpeed = 4.0;
     
-    // Create ripple effect from mouse position
+    // Create ripple effect from mouse position - tighter radius
     float ripple = sin(dist * waveFrequency - uTime * waveSpeed) * waveStrength;
-    ripple *= smoothstep(0.5, 0.0, dist); // Fade out ripple with distance
+    ripple *= smoothstep(0.3, 0.0, dist); // Tighter falloff for more localized effect
     
-    // Add subtle continuous wave animation
-    float wave = sin(uv.x * 10.0 + uTime * 0.5) * 0.005;
-    wave += sin(uv.y * 8.0 + uTime * 0.3) * 0.003;
+    // Add more aggressive continuous wave animation
+    float wave = sin(uv.x * 15.0 + uTime * 1.2) * 0.008;
+    wave += sin(uv.y * 12.0 + uTime * 0.8) * 0.006;
+    wave += sin((uv.x + uv.y) * 10.0 + uTime * 1.5) * 0.004;
     
-    // Apply distortion
+    // Apply distortion with stronger effect
     vec2 distortedUv = uv;
-    distortedUv.x += ripple * cos(atan(uv.y - mousePos.y, uv.x - mousePos.x));
-    distortedUv.y += ripple * sin(atan(uv.y - mousePos.y, uv.x - mousePos.x));
+    float angle = atan(uv.y - mousePos.y, uv.x - mousePos.x);
+    distortedUv.x += ripple * cos(angle) * DISTORTION_MULTIPLIER;
+    distortedUv.y += ripple * sin(angle) * DISTORTION_MULTIPLIER;
     distortedUv += wave;
     
     // Sample the texture with distorted UV
@@ -221,10 +226,10 @@ export function LiquidText({ text, className = '' }: LiquidTextProps) {
     const program = programRef.current;
     if (!gl || !program) return;
 
-    // Smooth mouse movement
-    mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.1;
-    mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.1;
-    hoverRef.current += (targetHoverRef.current - hoverRef.current) * 0.05;
+    // Smooth mouse movement - faster response
+    mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.15;
+    mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.15;
+    hoverRef.current += (targetHoverRef.current - hoverRef.current) * 0.1;
 
     // Clear with transparent background
     gl.clearColor(0, 0, 0, 0);
