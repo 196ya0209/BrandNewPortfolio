@@ -92,8 +92,6 @@ export function LiquidText({ text, className = '', fontSize = 'normal' }: Liquid
     const computedStyle = getComputedStyle(document.documentElement);
     const foregroundColor = computedStyle.getPropertyValue('--foreground').trim() || '#0a0a0a';
     const heroFont = computedStyle.getPropertyValue('--hero-font').trim() || 'Nohemi, system-ui, sans-serif';
-    const theme = document.documentElement.getAttribute('data-theme');
-    const isPlayful = theme === 'playful';
 
     // Clear canvas
     ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
@@ -123,16 +121,8 @@ export function LiquidText({ text, className = '', fontSize = 'normal' }: Liquid
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    // Create gradient for playful mode
-    if (isPlayful) {
-      const gradient = ctx.createLinearGradient(0, 0, textCanvas.width, 0);
-      gradient.addColorStop(0, '#ff6b6b');    // Red/coral
-      gradient.addColorStop(0.5, '#4ecdc4');  // Teal
-      gradient.addColorStop(1, '#ffe66d');    // Yellow
-      ctx.fillStyle = gradient;
-    } else {
-      ctx.fillStyle = foregroundColor;
-    }
+    // Create gradient for playful mode - removed since we're using bright background now
+    ctx.fillStyle = foregroundColor;
 
     // Draw text
     ctx.fillText(text, textCanvas.width / 2, textCanvas.height / 2);

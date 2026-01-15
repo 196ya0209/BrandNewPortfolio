@@ -62,22 +62,24 @@ html[data-theme="professional"] {
 }
 
 html[data-theme="playful"] {
-  /* Dark theme with colorful gradient text - inspired by Portfolio 2025 reference */
-  --background: #0a0a0a;
-  --background-rgb: 10, 10, 10;
-  --foreground: #ffffff;
+  /* Colorful bright theme - inspired by Portfolio 2025 reference */
+  --background: #ffe066;
+  --background-rgb: 255, 224, 102;
+  --foreground: #1a1a1a;
   --primary: #ff6b6b;
-  --secondary: #4ecdc4;
-  --accent: #ffe66d;
-  --muted: #1a1a1a;
-  --border: #333333;
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --card-border: rgba(255, 255, 255, 0.1);
+  --secondary: #1a1a1a;
+  --accent: #ff8fab;
+  --muted: #ffeaa7;
+  --border: #1a1a1a;
+  --card-bg: #ffffff;
+  --card-border: #1a1a1a;
   --hero-font: 'Humane', 'Clash Display', 'Cabinet Grotesk', 'Supreme', 'Nohemi', system-ui, sans-serif;
-  /* Gradient colors for text */
-  --gradient-start: #ff6b6b;
-  --gradient-mid: #4ecdc4;
-  --gradient-end: #ffe66d;
+  /* Colorful accent colors */
+  --playful-yellow: #ffe066;
+  --playful-pink: #ff8fab;
+  --playful-orange: #ff9f43;
+  --playful-blue: #74b9ff;
+  --playful-green: #55efc4;
 }
 
 @theme inline {
@@ -103,9 +105,78 @@ body {
   overflow-x: hidden;
 }
 
-/* Playful theme solid dark background */
+/* Playful theme bright colorful background */
 html[data-theme="playful"] body {
   background: var(--background);
+}
+
+/* Playful theme animated background shapes */
+html[data-theme="playful"] body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, var(--playful-pink) 0%, transparent 30%),
+    radial-gradient(circle at 80% 30%, var(--playful-orange) 0%, transparent 25%),
+    radial-gradient(circle at 40% 70%, var(--playful-blue) 0%, transparent 20%),
+    radial-gradient(circle at 70% 80%, var(--playful-green) 0%, transparent 25%);
+  opacity: 0.4;
+  animation: playfulBgShift 15s ease-in-out infinite;
+}
+
+@keyframes playfulBgShift {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+  }
+  25% {
+    transform: scale(1.05) translate(2%, 1%);
+  }
+  50% {
+    transform: scale(1) translate(0, 2%);
+  }
+  75% {
+    transform: scale(1.05) translate(-2%, 1%);
+  }
+}
+
+/* Playful mode floating geometric shapes */
+html[data-theme="playful"] .playful-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+html[data-theme="playful"] .playful-shape {
+  position: absolute;
+  border: 3px solid #1a1a1a;
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+html[data-theme="playful"] .playful-shape.circle {
+  border-radius: 50%;
+}
+
+html[data-theme="playful"] .playful-shape.square {
+  border-radius: 0;
+}
+
+@keyframes floatShape {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
 }
 
 /* Navbar Styles */
