@@ -1,5 +1,6 @@
 @import url('https://api.fontshare.com/v2/css?f[]=nohemi@400,500,600,700&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=supreme@400,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap');
 @import "tailwindcss";
 
 /* Theme CSS Variables - Professional is default (inspired by clarissemichard.com) */
@@ -14,7 +15,7 @@ html[data-theme="professional"] {
   --border: #d4cfc7;
   --card-bg: #ffffff;
   --card-border: #d4cfc7;
-  --hero-font: 'Nohemi', system-ui, sans-serif;
+  --hero-font: 'Cabinet Grotesk', 'Nohemi', system-ui, sans-serif;
 }
 
 html[data-theme="playful"] {
@@ -29,7 +30,7 @@ html[data-theme="playful"] {
   --border: #ffcc80;
   --card-bg: #ffffff;
   --card-border: #ffcc80;
-  --hero-font: 'Supreme', 'Nohemi', system-ui, sans-serif;
+  --hero-font: 'Cabinet Grotesk', 'Supreme', 'Nohemi', system-ui, sans-serif;
 }
 
 @theme inline {

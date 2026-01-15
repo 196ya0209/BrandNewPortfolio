@@ -107,10 +107,22 @@ export function LiquidText({ text, className = '', fontSize = 'normal' }: Liquid
     ctx.translate(0, textCanvas.height);
     ctx.scale(1, -1);
 
-    // Set text properties - much larger for 'large' size to fill most of the space
-    const fontSizeMultiplier = size === 'large' ? 0.45 : 0.18;
-    const maxFontSize = size === 'large' ? 500 : 200;
-    const calculatedFontSize = Math.min(width * fontSizeMultiplier, maxFontSize) * scale;
+    // Calculate font size to fit text within container width with padding
+    const padding = 0.05; // 5% padding on each side
+    const availableWidth = textCanvas.width * (1 - padding * 2);
+    
+    // Start with a large font size and scale down to fit
+    let testFontSize = size === 'large' ? 600 : 200;
+    ctx.font = `bold ${testFontSize}px ${heroFont}`;
+    const textMetrics = ctx.measureText(text);
+    
+    // Scale font size to fit available width
+    if (textMetrics.width > availableWidth) {
+      testFontSize = testFontSize * (availableWidth / textMetrics.width);
+    }
+    
+    // Apply final font size
+    const calculatedFontSize = testFontSize * scale;
     ctx.font = `bold ${calculatedFontSize}px ${heroFont}`;
     ctx.fillStyle = foregroundColor;
     ctx.textAlign = 'center';
