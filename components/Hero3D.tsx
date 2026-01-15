@@ -186,100 +186,111 @@ export function Hero3D() {
 
   return (
     <>
-      {/* Header bar - slim */}
-      <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between">
-        {/* Left - Hola */}
-        <motion.span
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm font-medium tracking-wider"
-          style={{ color: 'var(--foreground)' }}
-        >
-          Hola
-        </motion.span>
-
-        {/* Center - Portfolio */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="absolute left-1/2 -translate-x-1/2 text-center"
-        >
-          <span 
-            className="text-sm font-medium tracking-wider"
+      {/* Header bar - slim with full-width line below */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <div className="px-6 py-3 flex items-center justify-between">
+          {/* Left - Hola */}
+          <motion.span
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xs font-medium tracking-wider"
             style={{ color: 'var(--foreground)' }}
           >
-            Portfolio
-          </span>
-        </motion.div>
+            Hola
+          </motion.span>
 
-        {/* Right - Professional text with line + Surprise Me icon */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex items-center gap-4"
-        >
-          <div className="flex flex-col items-end">
+          {/* Center - Portfolio */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="absolute left-1/2 -translate-x-1/2 text-center"
+          >
             <span 
-              className="text-sm font-medium tracking-wider"
+              className="text-xs font-medium tracking-wider"
               style={{ color: 'var(--foreground)' }}
             >
-              {isPlayful ? 'Playful' : 'Professional'}
+              Portfolio
             </span>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="w-16 h-[1px] mt-1"
-              style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'right' }}
-            />
-          </div>
-          
-          {/* Surprise Me Icon Button */}
-          <motion.button
-            onClick={handleSurpriseMe}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
-            style={{ 
-              backgroundColor: 'var(--foreground)', 
-              color: 'var(--background)',
-            }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            title="Surprise Me"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
-          </motion.button>
+          </motion.div>
 
-          {/* Reset button (only shows when palette is changed) */}
-          <AnimatePresence>
-            {currentPalette !== null && (
-              <motion.button
-                onClick={resetColors}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
-                style={{ 
-                  backgroundColor: 'transparent', 
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--foreground)',
-                }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                title="Reset Colors"
+          {/* Right - Professional text with line + Surprise Me icon */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex items-center gap-3"
+          >
+            <div className="flex flex-col items-end">
+              <span 
+                className="text-xs font-medium tracking-wider"
+                style={{ color: 'var(--foreground)' }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                  <path d="M3 3v5h5"></path>
-                </svg>
-              </motion.button>
-            )}
-          </AnimatePresence>
-        </motion.div>
+                {isPlayful ? 'Playful' : 'Professional'}
+              </span>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="w-12 h-[1px] mt-0.5"
+                style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'right' }}
+              />
+            </div>
+            
+            {/* Surprise Me Icon Button */}
+            <motion.button
+              onClick={handleSurpriseMe}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+              style={{ 
+                backgroundColor: 'var(--foreground)', 
+                color: 'var(--background)',
+              }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              title="Surprise Me"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </motion.button>
+
+            {/* Reset button (only shows when palette is changed) */}
+            <AnimatePresence>
+              {currentPalette !== null && (
+                <motion.button
+                  onClick={resetColors}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300"
+                  style={{ 
+                    backgroundColor: 'transparent', 
+                    color: 'var(--foreground)',
+                    border: '1px solid var(--foreground)',
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  title="Reset Colors"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
+                  </svg>
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+        
+        {/* Full-width horizontal line below header */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 0.15 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="w-full h-[1px]"
+          style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'left' }}
+        />
       </div>
 
       {/* Floating shapes for playful mode */}
