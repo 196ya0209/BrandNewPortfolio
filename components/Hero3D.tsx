@@ -1,45 +1,104 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef, useState, useCallback } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { LiquidText } from './LiquidText';
 
-// Register ScrollTrigger plugin
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+// Color palettes for "Surprise Me" feature
+const colorPalettes = [
+  { bg: '#f5f0e8', fg: '#1a1a1a', accent: '#333333' }, // Cream/Dark
+  { bg: '#1a1a1a', fg: '#f5f0e8', accent: '#e8e3db' }, // Dark/Cream
+  { bg: '#264653', fg: '#e9c46a', accent: '#f4a261' }, // Teal/Gold
+  { bg: '#e63946', fg: '#f1faee', accent: '#a8dadc' }, // Red/White
+  { bg: '#2d3436', fg: '#dfe6e9', accent: '#74b9ff' }, // Charcoal/Blue
+  { bg: '#6c5ce7', fg: '#ffffff', accent: '#a29bfe' }, // Purple/White
+  { bg: '#00b894', fg: '#ffffff', accent: '#55efc4' }, // Green/White
+  { bg: '#fdcb6e', fg: '#2d3436', accent: '#e17055' }, // Yellow/Dark
+  { bg: '#fd79a8', fg: '#2d3436', accent: '#e84393' }, // Pink/Dark
+  { bg: '#0984e3', fg: '#ffffff', accent: '#74b9ff' }, // Blue/White
+];
+
+// Split text into words for smooth animation
+function SplitText({ children, className, style, delay = 0 }: { children: string; className?: string; style?: React.CSSProperties; delay?: number }) {
+  const words = children.split(' ');
+  
+  return (
+    <span className={className} style={style}>
+      {words.map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden">
+          <motion.span
+            className="inline-block"
+            initial={{ y: '100%', opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: '-20px' }}
+            transition={{
+              duration: 0.6,
+              delay: delay + i * 0.03,
+              ease: [0.25, 0.4, 0.25, 1],
+            }}
+          >
+            {word}
+          </motion.span>
+          {i < words.length - 1 && '\u00A0'}
+        </span>
+      ))}
+    </span>
+  );
 }
 
 export function Hero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true });
-  const aboutInView = useInView(aboutRef, { once: true, margin: "-100px" });
+  const [currentPalette, setCurrentPalette] = useState<number | null>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start']
+  });
+  
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  useEffect(() => {
-    // Parallax scroll effect for hero
-    if (containerRef.current) {
-      gsap.to(containerRef.current, {
-        yPercent: 20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    }
+  // Surprise Me - Random color change
+  const handleSurpriseMe = useCallback(() => {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * colorPalettes.length);
+    } while (newIndex === currentPalette);
+    
+    setCurrentPalette(newIndex);
+    const palette = colorPalettes[newIndex];
+    
+    // Apply colors to CSS variables
+    document.documentElement.style.setProperty('--background', palette.bg);
+    document.documentElement.style.setProperty('--foreground', palette.fg);
+    document.documentElement.style.setProperty('--primary', palette.fg);
+    document.documentElement.style.setProperty('--secondary', palette.accent);
+    document.documentElement.style.setProperty('--accent', palette.accent);
+    document.documentElement.style.setProperty('--border', palette.accent);
+  }, [currentPalette]);
+
+  // Reset colors to default
+  const resetColors = useCallback(() => {
+    setCurrentPalette(null);
+    document.documentElement.style.removeProperty('--background');
+    document.documentElement.style.removeProperty('--foreground');
+    document.documentElement.style.removeProperty('--primary');
+    document.documentElement.style.removeProperty('--secondary');
+    document.documentElement.style.removeProperty('--accent');
+    document.documentElement.style.removeProperty('--border');
   }, []);
 
   return (
     <>
       {/* Hero Section */}
       <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex flex-col items-center justify-center">
-        <div className="w-full flex-1 flex flex-col items-center justify-center px-4 z-10">
-          {/* Liquid Text Animation - Main Hero "Dreamer" - Takes most of the space */}
-          <div className="w-full flex-1 max-h-[60vh] min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[450px]">
+        <motion.div 
+          className="w-full flex-1 flex flex-col items-center justify-center px-4 z-10"
+          style={{ y: heroY, opacity: heroOpacity }}
+        >
+          {/* Liquid Text Animation - Main Hero "Dreamer" */}
+          <div className="w-full flex-1 max-h-[55vh] min-h-[280px] sm:min-h-[320px] md:min-h-[380px] lg:min-h-[420px]">
             <LiquidText 
               text="Dreamer" 
               className="w-full h-full"
@@ -47,151 +106,171 @@ export function Hero3D() {
             />
           </div>
 
-          {/* Horizontal Line - Very thin and small */}
+          {/* Horizontal Line - Very thin and minimal spacing */}
           <motion.hr
             initial={{ scaleX: 0, opacity: 0 }}
-            animate={isInView ? { scaleX: 1, opacity: 0.4 } : { scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 0.3 }}
             transition={{
-              duration: 1,
-              delay: 0.5,
+              duration: 1.2,
+              delay: 0.6,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className="w-32 md:w-48 mx-auto border-t my-4"
+            className="w-24 md:w-32 mx-auto border-t my-2"
             style={{ borderColor: 'var(--foreground)', transformOrigin: 'center' }}
           />
 
-          {/* Subtitle - Full Stack Developer with same font */}
+          {/* Subtitle - Full Stack Developer */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 1,
-              delay: 0.8,
+              delay: 0.9,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-relaxed tracking-wide mb-8"
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wider mb-6"
             style={{ color: 'var(--foreground)', fontFamily: 'var(--hero-font)' }}
           >
             Full Stack Developer
           </motion.p>
 
+          {/* Surprise Me Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="flex gap-3 mt-4"
+          >
+            <motion.button
+              onClick={handleSurpriseMe}
+              className="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300"
+              style={{ 
+                backgroundColor: 'var(--foreground)', 
+                color: 'var(--background)',
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              ✨ Surprise Me
+            </motion.button>
+            {currentPalette !== null && (
+              <motion.button
+                onClick={resetColors}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300"
+                style={{ 
+                  backgroundColor: 'transparent', 
+                  color: 'var(--foreground)',
+                  border: '1px solid var(--foreground)',
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Reset
+              </motion.button>
+            )}
+          </motion.div>
+
           {/* Scroll indicator */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 1.5, duration: 1 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.8, duration: 1 }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2"
           >
             <motion.div
-              animate={{ y: [0, 8, 0] }}
+              animate={{ y: [0, 6, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
               className="flex flex-col items-center gap-1 cursor-pointer"
               onClick={() => aboutRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <span className="text-xs font-medium uppercase tracking-widest" style={{ color: 'var(--secondary)' }}>Scroll</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--secondary)' }}>Scroll</span>
               <svg 
-                width="20" 
-                height="20" 
+                width="16" 
+                height="16" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
-                strokeWidth="1.5"
+                strokeWidth="1"
                 style={{ color: 'var(--secondary)' }}
               >
                 <path d="M12 5v14M5 12l7 7 7-7"/>
               </svg>
             </motion.div>
           </motion.div>
-
-          {/* Decorative animated background glow */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={isInView ? { scale: 1.5, opacity: 0.08 } : { scale: 0, opacity: 0 }}
-            transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
-            className="absolute inset-0 -z-10 pointer-events-none"
-          >
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl"
-              style={{ backgroundColor: 'var(--primary)' }}
-            />
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* About Me Section - Scroll Reveal */}
+      {/* About Section - Same background, smooth text reveal */}
       <div 
         ref={aboutRef}
-        className="relative w-full min-h-screen flex items-center justify-center py-24 px-4"
-        style={{ backgroundColor: 'var(--muted)' }}
+        className="relative w-full min-h-screen flex items-center justify-center py-32 px-6"
       >
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={aboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-            transition={{ duration: 1, ease: [0.25, 0.4, 0.25, 1] }}
-            className="text-center"
-          >
-            <h2 
-              className="text-lg md:text-xl font-medium mb-8 tracking-widest uppercase"
-              style={{ color: 'var(--secondary)' }}
-            >
-              About Me
-            </h2>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center">
+            {/* Main paragraph with smooth word-by-word reveal */}
             <p 
-              className="text-3xl md:text-4xl lg:text-5xl leading-relaxed font-medium mb-12"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.4] font-medium mb-16"
               style={{ color: 'var(--foreground)' }}
             >
-              I&apos;m a passionate developer who loves creating beautiful, 
-              functional, and user-friendly digital experiences that make a difference.
+              <SplitText delay={0}>
+                I&apos;m a passionate developer who loves creating beautiful, functional, and user-friendly digital experiences that make a difference.
+              </SplitText>
             </p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={aboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-wrap justify-center gap-4"
+
+            {/* Second paragraph with emojis - smooth reveal */}
+            <motion.p 
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-[1.5] font-medium mb-20"
+              style={{ color: 'var(--foreground)' }}
             >
-              <span 
-                className="px-6 py-3 rounded-full text-sm font-medium"
-                style={{ 
-                  backgroundColor: 'var(--card-bg)', 
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)'
-                }}
-              >
-                React & Next.js
-              </span>
-              <span 
-                className="px-6 py-3 rounded-full text-sm font-medium"
-                style={{ 
-                  backgroundColor: 'var(--card-bg)', 
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)'
-                }}
-              >
-                TypeScript
-              </span>
-              <span 
-                className="px-6 py-3 rounded-full text-sm font-medium"
-                style={{ 
-                  backgroundColor: 'var(--card-bg)', 
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)'
-                }}
-              >
-                Node.js
-              </span>
-              <span 
-                className="px-6 py-3 rounded-full text-sm font-medium"
-                style={{ 
-                  backgroundColor: 'var(--card-bg)', 
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)'
-                }}
-              >
-                UI/UX Design
-              </span>
+              <SplitText delay={0.3}>
+                🚀 Building the future, one line of code at a time ✨ Crafting experiences that users love 💡 Turning ideas into reality 🎨
+              </SplitText>
+            </motion.p>
+
+            {/* Third paragraph */}
+            <motion.p 
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-[1.5] mb-16"
+              style={{ color: 'var(--secondary)' }}
+            >
+              <SplitText delay={0.5}>
+                With expertise in React, Next.js, TypeScript, and Node.js, I bring designs to life with clean, maintainable code and pixel-perfect attention to detail.
+              </SplitText>
+            </motion.p>
+            
+            {/* Skills tags */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-wrap justify-center gap-3"
+            >
+              {['React & Next.js', 'TypeScript', 'Node.js', 'UI/UX Design', 'WebGL', 'Animation'].map((skill, index) => (
+                <motion.span 
+                  key={skill}
+                  className="px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer"
+                  style={{ 
+                    backgroundColor: 'transparent', 
+                    color: 'var(--foreground)',
+                    border: '1px solid var(--border)'
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.7 + index * 0.08 }}
+                  whileHover={{ 
+                    backgroundColor: 'var(--foreground)', 
+                    color: 'var(--background)',
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  {skill}
+                </motion.span>
+              ))}
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </>

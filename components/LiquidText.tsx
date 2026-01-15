@@ -30,8 +30,8 @@ const fragmentShader = `
   uniform vec2 uResolution;
   varying vec2 vUv;
   
-  // Distortion intensity multiplier
-  const float DISTORTION_MULTIPLIER = 1.5;
+  // Distortion intensity multiplier - tighter effect
+  const float DISTORTION_MULTIPLIER = 0.8;
   
   void main() {
     vec2 uv = vUv;
@@ -40,21 +40,20 @@ const fragmentShader = `
     vec2 mousePos = uMouse;
     float dist = distance(uv, mousePos);
     
-    // Liquid wave parameters - tighter and more aggressive
-    float waveStrength = 0.08 * uHover;
-    float waveFrequency = 25.0;
-    float waveSpeed = 4.0;
+    // Liquid wave parameters - tighter and more controlled
+    float waveStrength = 0.04 * uHover;
+    float waveFrequency = 30.0;
+    float waveSpeed = 3.0;
     
-    // Create ripple effect from mouse position - tighter radius
+    // Create ripple effect from mouse position - very tight radius
     float ripple = sin(dist * waveFrequency - uTime * waveSpeed) * waveStrength;
-    ripple *= smoothstep(0.3, 0.0, dist); // Tighter falloff for more localized effect
+    ripple *= smoothstep(0.2, 0.0, dist); // Very tight falloff for localized effect
     
-    // Add more aggressive continuous wave animation
-    float wave = sin(uv.x * 15.0 + uTime * 1.2) * 0.008;
-    wave += sin(uv.y * 12.0 + uTime * 0.8) * 0.006;
-    wave += sin((uv.x + uv.y) * 10.0 + uTime * 1.5) * 0.004;
+    // Subtle continuous wave animation - much reduced
+    float wave = sin(uv.x * 20.0 + uTime * 0.8) * 0.002;
+    wave += sin(uv.y * 18.0 + uTime * 0.6) * 0.0015;
     
-    // Apply distortion with stronger effect
+    // Apply distortion with controlled effect
     vec2 distortedUv = uv;
     float angle = atan(uv.y - mousePos.y, uv.x - mousePos.x);
     distortedUv.x += ripple * cos(angle) * DISTORTION_MULTIPLIER;
