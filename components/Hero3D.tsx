@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { LiquidText } from './LiquidText';
 
 // Register ScrollTrigger plugin
 if (typeof window !== 'undefined') {
@@ -31,34 +32,16 @@ export function Hero3D() {
   }, []);
 
   const name = "196ya0209";
-  const characters = name.split('');
 
   return (
     <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex items-center justify-center pt-20">
-      <div className="max-w-7xl mx-auto text-center px-4 z-10">
-        {/* Animated Name - Much Larger */}
-        <div className="mb-12">
-          <h1
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[12rem] font-bold mb-8 leading-[0.9] overflow-hidden"
-            style={{ fontFamily: 'var(--hero-font)' }}
-          >
-            {characters.map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 100 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
-                transition={{
-                  duration: 0.8,
-                  delay: index * 0.08,
-                  ease: [0.25, 0.4, 0.25, 1],
-                }}
-                className="inline-block hover:text-[var(--primary)] transition-colors duration-300"
-                style={{ color: 'var(--foreground)' }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </h1>
+      <div className="max-w-7xl mx-auto text-center px-4 z-10 w-full">
+        {/* Liquid Text Animation - Main Hero */}
+        <div className="mb-12 w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px]">
+          <LiquidText 
+            text={name} 
+            className="w-full h-full"
+          />
         </div>
 
         {/* Subtitle - Larger and More Prominent */}
