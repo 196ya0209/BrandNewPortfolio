@@ -36,40 +36,41 @@ export function Hero3D() {
   return (
     <>
       {/* Hero Section */}
-      <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex items-center justify-center">
-        <div className="max-w-7xl mx-auto text-center px-4 z-10 w-full">
-          {/* Liquid Text Animation - Main Hero "Dreamer" */}
-          <div className="mb-4 w-full h-[150px] sm:h-[200px] md:h-[250px] lg:h-[300px]">
+      <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex flex-col items-center justify-center">
+        <div className="w-full flex-1 flex flex-col items-center justify-center px-4 z-10">
+          {/* Liquid Text Animation - Main Hero "Dreamer" - Takes most of the space */}
+          <div className="w-full flex-1 max-h-[60vh] min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[450px]">
             <LiquidText 
               text="Dreamer" 
               className="w-full h-full"
+              fontSize="large"
             />
           </div>
 
-          {/* Horizontal Line */}
+          {/* Horizontal Line - Very thin and small */}
           <motion.hr
             initial={{ scaleX: 0, opacity: 0 }}
-            animate={isInView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+            animate={isInView ? { scaleX: 1, opacity: 0.4 } : { scaleX: 0, opacity: 0 }}
             transition={{
               duration: 1,
               delay: 0.5,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className="w-full max-w-md mx-auto border-t-2 mb-6"
+            className="w-32 md:w-48 mx-auto border-t my-4"
             style={{ borderColor: 'var(--foreground)', transformOrigin: 'center' }}
           />
 
-          {/* Subtitle - Full Stack Developer */}
+          {/* Subtitle - Full Stack Developer with same font */}
           <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{
               duration: 1,
               delay: 0.8,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className="text-2xl md:text-4xl lg:text-5xl leading-relaxed max-w-4xl mx-auto font-medium tracking-wide"
-            style={{ color: 'var(--foreground)' }}
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-relaxed tracking-wide mb-8"
+            style={{ color: 'var(--foreground)', fontFamily: 'var(--hero-font)' }}
           >
             Full Stack Developer
           </motion.p>
@@ -79,22 +80,22 @@ export function Hero3D() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2"
           >
             <motion.div
-              animate={{ y: [0, 10, 0] }}
+              animate={{ y: [0, 8, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              className="flex flex-col items-center gap-2 cursor-pointer"
+              className="flex flex-col items-center gap-1 cursor-pointer"
               onClick={() => aboutRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <span className="text-sm font-medium" style={{ color: 'var(--secondary)' }}>Scroll</span>
+              <span className="text-xs font-medium uppercase tracking-widest" style={{ color: 'var(--secondary)' }}>Scroll</span>
               <svg 
-                width="24" 
-                height="24" 
+                width="20" 
+                height="20" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
-                strokeWidth="2"
+                strokeWidth="1.5"
                 style={{ color: 'var(--secondary)' }}
               >
                 <path d="M12 5v14M5 12l7 7 7-7"/>
@@ -105,7 +106,7 @@ export function Hero3D() {
           {/* Decorative animated background glow */}
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
-            animate={isInView ? { scale: 1.5, opacity: 0.1 } : { scale: 0, opacity: 0 }}
+            animate={isInView ? { scale: 1.5, opacity: 0.08 } : { scale: 0, opacity: 0 }}
             transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
             className="absolute inset-0 -z-10 pointer-events-none"
           >

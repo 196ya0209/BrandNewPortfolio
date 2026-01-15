@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 interface LiquidTextProps {
   text: string;
   className?: string;
+  fontSize?: 'normal' | 'large';
 }
 
 // Vertex shader for the liquid distortion effect
@@ -67,7 +68,7 @@ const fragmentShader = `
   }
 `;
 
-export function LiquidText({ text, className = '' }: LiquidTextProps) {
+export function LiquidText({ text, className = '', fontSize = 'normal' }: LiquidTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
@@ -82,7 +83,7 @@ export function LiquidText({ text, className = '' }: LiquidTextProps) {
   const vertexShaderRef = useRef<WebGLShader | null>(null);
   const fragmentShaderRef = useRef<WebGLShader | null>(null);
 
-  const createTextTexture = useCallback((gl: WebGLRenderingContext, text: string, width: number, height: number) => {
+  const createTextTexture = useCallback((gl: WebGLRenderingContext, text: string, width: number, height: number, size: 'normal' | 'large') => {
     // Create a canvas for rendering text
     const textCanvas = document.createElement('canvas');
     const ctx = textCanvas.getContext('2d');
@@ -106,9 +107,11 @@ export function LiquidText({ text, className = '' }: LiquidTextProps) {
     ctx.translate(0, textCanvas.height);
     ctx.scale(1, -1);
 
-    // Set text properties
-    const fontSize = Math.min(width * 0.18, 200) * scale;
-    ctx.font = `bold ${fontSize}px ${heroFont}`;
+    // Set text properties - much larger for 'large' size to fill most of the space
+    const fontSizeMultiplier = size === 'large' ? 0.45 : 0.18;
+    const maxFontSize = size === 'large' ? 500 : 200;
+    const calculatedFontSize = Math.min(width * fontSizeMultiplier, maxFontSize) * scale;
+    ctx.font = `bold ${calculatedFontSize}px ${heroFont}`;
     ctx.fillStyle = foregroundColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -218,8 +221,8 @@ export function LiquidText({ text, className = '' }: LiquidTextProps) {
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     // Create text texture
-    textureRef.current = createTextTexture(gl, text, rect.width, rect.height);
-  }, [text, createTextTexture]);
+    textureRef.current = createTextTexture(gl, text, rect.width, rect.height, fontSize);
+  }, [text, createTextTexture, fontSize]);
 
   const render = useCallback(() => {
     const gl = glRef.current;
@@ -278,7 +281,7 @@ export function LiquidText({ text, className = '' }: LiquidTextProps) {
       gl.viewport(0, 0, canvas.width, canvas.height);
 
       // Recreate text texture with new size
-      textureRef.current = createTextTexture(gl, text, rect.width, rect.height);
+      textureRef.current = createTextTexture(gl, text, rect.width, rect.height, fontSize);
     };
 
     // Watch for theme changes via data-theme attribute
@@ -290,7 +293,7 @@ export function LiquidText({ text, className = '' }: LiquidTextProps) {
           const container = containerRef.current;
           if (gl && container) {
             const rect = container.getBoundingClientRect();
-            textureRef.current = createTextTexture(gl, text, rect.width, rect.height);
+            textureRef.current = createTextTexture(gl, text, rect.width, rect.height, fontSize);
           }
         }
       });
@@ -335,7 +338,7 @@ export function LiquidText({ text, className = '' }: LiquidTextProps) {
         }
       }
     };
-  }, [initWebGL, render, createTextTexture, text]);
+  }, [initWebGL, render, createTextTexture, text, fontSize]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const rect = containerRef.current?.getBoundingClientRect();
