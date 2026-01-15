@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useState, useCallback } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState, useCallback, useEffect } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { LiquidText } from './LiquidText';
 
 // Color palettes for "Surprise Me" feature
@@ -46,10 +46,53 @@ function SplitText({ children, className, style, delay = 0 }: { children: string
   );
 }
 
+// Floating shapes for playful mode background
+function FloatingShapes({ isPlayful }: { isPlayful: boolean }) {
+  if (!isPlayful) return null;
+  
+  const shapes = [
+    { size: 80, x: '10%', y: '20%', delay: 0, color: '#fd79a8' },
+    { size: 60, x: '80%', y: '15%', delay: 0.5, color: '#fdcb6e' },
+    { size: 100, x: '70%', y: '60%', delay: 1, color: '#00cec9' },
+    { size: 40, x: '20%', y: '70%', delay: 1.5, color: '#a29bfe' },
+    { size: 70, x: '50%', y: '80%', delay: 2, color: '#fd79a8' },
+  ];
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      {shapes.map((shape, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full opacity-30 blur-xl"
+          style={{
+            width: shape.size,
+            height: shape.size,
+            left: shape.x,
+            top: shape.y,
+            backgroundColor: shape.color,
+          }}
+          animate={{
+            y: [0, -30, 0],
+            x: [0, 15, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 6,
+            delay: shape.delay,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function Hero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const [currentPalette, setCurrentPalette] = useState<number | null>(null);
+  const [isPlayful, setIsPlayful] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -58,6 +101,24 @@ export function Hero3D() {
   
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  // Detect theme changes
+  useEffect(() => {
+    const checkTheme = () => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      setIsPlayful(theme === 'playful');
+    };
+    
+    checkTheme();
+    
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['data-theme'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
 
   // Surprise Me - Random color change
   const handleSurpriseMe = useCallback(() => {
@@ -93,6 +154,11 @@ export function Hero3D() {
     <>
       {/* Hero Section */}
       <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex flex-col items-center justify-center">
+        {/* Floating shapes for playful mode */}
+        <AnimatePresence>
+          <FloatingShapes isPlayful={isPlayful} />
+        </AnimatePresence>
+        
         <motion.div 
           className="w-full flex-1 flex flex-col items-center justify-center px-4 z-10"
           style={{ y: heroY, opacity: heroOpacity }}
@@ -109,14 +175,14 @@ export function Hero3D() {
           {/* Horizontal Line - Very thin and minimal spacing */}
           <motion.hr
             initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 0.3 }}
+            animate={{ scaleX: 1, opacity: isPlayful ? 0.5 : 0.3 }}
             transition={{
               duration: 1.2,
               delay: 0.6,
               ease: [0.25, 0.4, 0.25, 1],
             }}
             className="w-24 md:w-32 mx-auto border-t my-2"
-            style={{ borderColor: 'var(--foreground)', transformOrigin: 'center' }}
+            style={{ borderColor: isPlayful ? 'var(--secondary)' : 'var(--foreground)', transformOrigin: 'center' }}
           />
 
           {/* Subtitle - Full Stack Developer */}

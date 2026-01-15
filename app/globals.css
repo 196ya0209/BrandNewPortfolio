@@ -22,18 +22,20 @@ html[data-theme="professional"] {
 }
 
 html[data-theme="playful"] {
-  /* Colorful playful palette with vibrant colors */
-  --background: #fef7e8;
-  --background-rgb: 254, 247, 232;
-  --foreground: #1a1a1a;
-  --primary: #ff6b35;
-  --secondary: #f7c59f;
-  --accent: #2ec4b6;
-  --muted: #fff3e0;
-  --border: #ffcc80;
-  --card-bg: #ffffff;
-  --card-border: #ffcc80;
+  /* Bold, colorful playful palette inspired by modern logo fonts like Ragikon */
+  --background: #6c5ce7;
+  --background-rgb: 108, 92, 231;
+  --foreground: #ffffff;
+  --primary: #fd79a8;
+  --secondary: #fdcb6e;
+  --accent: #00cec9;
+  --muted: #5f50d9;
+  --border: #a29bfe;
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.2);
   --hero-font: 'Oswald', 'Clash Display', 'Cabinet Grotesk', 'Supreme', 'Nohemi', system-ui, sans-serif;
+  --gradient-start: #6c5ce7;
+  --gradient-end: #fd79a8;
 }
 
 @theme inline {
@@ -55,10 +57,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Nohemi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  transition-property: background-color, color;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in-out;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
   overflow-x: hidden;
+}
+
+/* Playful theme gradient background */
+html[data-theme="playful"] body {
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  background-attachment: fixed;
 }
 
 /* Navbar Styles */
