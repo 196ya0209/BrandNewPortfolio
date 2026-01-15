@@ -283,11 +283,11 @@ export function Hero3D() {
           </motion.div>
         </div>
         
-        {/* Full-width horizontal line below header */}
+        {/* Full-width horizontal line below header - left to right animation */}
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 0.15 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 1.2, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
           className="w-full h-[1px]"
           style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'left' }}
         />
@@ -313,17 +313,17 @@ export function Hero3D() {
             />
           </div>
 
-          {/* Full-width Horizontal Line */}
+          {/* Full-width Horizontal Line - left to right animation */}
           <motion.hr
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 0.3 }}
             transition={{
-              duration: 1.2,
+              duration: 1.5,
               delay: 0.6,
               ease: [0.25, 0.4, 0.25, 1],
             }}
             className="w-full mx-auto border-t my-1"
-            style={{ borderColor: 'var(--foreground)', transformOrigin: 'center' }}
+            style={{ borderColor: 'var(--foreground)', transformOrigin: 'left' }}
           />
 
           {/* Subtitle - Full Stack Developer */}

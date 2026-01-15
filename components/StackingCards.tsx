@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Project {
   id: number;
@@ -51,6 +51,20 @@ const projects: Project[] = [
     image: '/api/placeholder/600/400',
   },
 ];
+
+// Animated line component - animates from left to right
+function AnimatedLine({ delay = 0 }: { delay?: number }) {
+  return (
+    <motion.div
+      initial={{ scaleX: 0, opacity: 0 }}
+      whileInView={{ scaleX: 1, opacity: 0.15 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1.2, delay, ease: [0.25, 0.4, 0.25, 1] }}
+      className="w-full h-[1px]"
+      style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'left' }}
+    />
+  );
+}
 
 // Geometric shapes component for card image overlay
 function GeometricShapes({ accentColor }: { accentColor: string }) {
@@ -160,6 +174,12 @@ export function StackingCards() {
             >
               Featured Projects
             </motion.h2>
+            
+            {/* Animated line below title - left to right */}
+            <div className="max-w-md mx-auto mb-6">
+              <AnimatedLine delay={0.3} />
+            </div>
+            
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -172,16 +192,23 @@ export function StackingCards() {
             </motion.p>
           </div>
 
-          {/* Stacking Cards Container */}
-          <div ref={containerRef} className="relative">
+          {/* Full width line before cards */}
+          <AnimatedLine delay={0.4} />
+
+          {/* Project Cards - Sequential layout (not stacking) */}
+          <div ref={containerRef} className="space-y-16 mt-16">
             {projects.map((project, index) => (
-              <StackingCard
+              <ProjectCard
                 key={project.id}
                 project={project}
                 index={index}
-                total={projects.length}
               />
             ))}
+          </div>
+          
+          {/* Full width line after cards */}
+          <div className="mt-16">
+            <AnimatedLine delay={0.2} />
           </div>
         </div>
       </div>
@@ -189,55 +216,35 @@ export function StackingCards() {
   );
 }
 
-interface StackingCardProps {
+interface ProjectCardProps {
   project: Project;
   index: number;
-  total: number;
 }
 
-function StackingCard({ project, index, total }: StackingCardProps) {
+function ProjectCard({ project, index }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "start start"],
-  });
-
-  // Calculate scale based on scroll position
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [0.85, 0.95, 1]
-  );
-
-  // Calculate opacity based on scroll position
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.6],
-    [0, 0.5, 1]
-  );
-
-  // Sticky positioning offset
-  const stickyTop = 100 + index * 30; // 100px initial + 30px per card
-  const isLastCard = index === total - 1;
 
   return (
     <motion.div
       ref={cardRef}
-      style={{
-        scale,
-        opacity,
-        position: 'sticky',
-        top: `${stickyTop}px`,
-        zIndex: total - index,
-      }}
-      className={`mb-8 ${!isLastCard ? 'will-change-transform' : ''}`}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.7, delay: index * 0.1 }}
+      className="relative"
     >
-      {/* Card with beige background */}
-      <div
-        className="rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-2xl"
+      {/* Card with beige background - fully clickable */}
+      <motion.div
+        className="rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-2xl cursor-pointer"
         style={{
           backgroundColor: '#f5f0e8', // Beige background
           border: '2px solid #e8e3db',
+        }}
+        whileHover={{ scale: 1.01, y: -5 }}
+        whileTap={{ scale: 0.99 }}
+        onClick={() => {
+          // Handle project click - can navigate to project page
+          console.log(`Navigate to project: ${project.title}`);
         }}
       >
         <div className="flex flex-col lg:flex-row">
@@ -300,6 +307,10 @@ function StackingCard({ project, index, total }: StackingCardProps) {
                 }}
                 whileHover={{ scale: 1.03, backgroundColor: project.accentColor }}
                 whileTap={{ scale: 0.98 }}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent card click
+                  console.log(`Explore project: ${project.title}`);
+                }}
               >
                 Explore Project
                 <svg 
@@ -358,7 +369,14 @@ function StackingCard({ project, index, total }: StackingCardProps) {
             <GeometricShapes accentColor={project.accentColor} />
           </div>
         </div>
-      </div>
+      </motion.div>
+      
+      {/* Animated line below each card (except last) */}
+      {index < projects.length - 1 && (
+        <div className="mt-16">
+          <AnimatedLine delay={0.3} />
+        </div>
+      )}
     </motion.div>
   );
 }
