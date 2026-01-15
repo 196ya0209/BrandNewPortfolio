@@ -2,33 +2,33 @@
 @import url('https://api.fontshare.com/v2/css?f[]=supreme@400,700&display=swap');
 @import "tailwindcss";
 
-/* Theme CSS Variables - Professional is default */
+/* Theme CSS Variables - Professional is default (inspired by clarissemichard.com) */
 html[data-theme="professional"] {
-  --background: #ffffff;
-  --background-rgb: 255, 255, 255;
-  --foreground: #0a0a0a;
-  --primary: #2563eb;
-  --secondary: #64748b;
-  --accent: #0ea5e9;
-  --muted: #f1f5f9;
-  --border: #e2e8f0;
+  --background: #f5f0e8;
+  --background-rgb: 245, 240, 232;
+  --foreground: #1a1a1a;
+  --primary: #1a1a1a;
+  --secondary: #666666;
+  --accent: #333333;
+  --muted: #ebe6de;
+  --border: #d4cfc7;
   --card-bg: #ffffff;
-  --card-border: #e2e8f0;
+  --card-border: #d4cfc7;
   --hero-font: 'Nohemi', system-ui, sans-serif;
 }
 
 html[data-theme="playful"] {
-  /* Blue-based playful palette inspired by Super Duper */
-  --background: #e8f4ff;
-  --background-rgb: 232, 244, 255;
-  --foreground: #0a1929;
-  --primary: #2196f3;
-  --secondary: #64b5f6;
-  --accent: #1976d2;
-  --muted: #f1f8ff;
-  --border: #90caf9;
+  /* Colorful playful palette with vibrant colors */
+  --background: #fef7e8;
+  --background-rgb: 254, 247, 232;
+  --foreground: #1a1a1a;
+  --primary: #ff6b35;
+  --secondary: #f7c59f;
+  --accent: #2ec4b6;
+  --muted: #fff3e0;
+  --border: #ffcc80;
   --card-bg: #ffffff;
-  --card-border: #90caf9;
+  --card-border: #ffcc80;
   --hero-font: 'Supreme', 'Nohemi', system-ui, sans-serif;
 }
 
@@ -64,7 +64,7 @@ body {
 }
 
 html[data-theme="playful"] .navbar-scrolled {
-  box-shadow: 0 8px 16px -4px rgba(33, 150, 243, 0.15);
+  box-shadow: 0 8px 16px -4px rgba(255, 107, 53, 0.15);
 }
 
 .active-link {
@@ -93,7 +93,7 @@ html[data-theme="playful"] .navbar-scrolled {
 }
 
 html[data-theme="playful"] .card-hover:hover {
-  box-shadow: 0 20px 25px -5px rgba(33, 150, 243, 0.12), 0 10px 10px -5px rgba(33, 150, 243, 0.06);
+  box-shadow: 0 20px 25px -5px rgba(255, 107, 53, 0.12), 0 10px 10px -5px rgba(255, 107, 53, 0.06);
 }
 
 /* Respect reduced motion preference */
