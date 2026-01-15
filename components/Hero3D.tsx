@@ -46,16 +46,20 @@ function SplitText({ children, className, style, delay = 0 }: { children: string
   );
 }
 
-// Floating shapes for playful mode background
+// Floating shapes for playful mode background - geometric style
 function FloatingShapes({ isPlayful }: { isPlayful: boolean }) {
   if (!isPlayful) return null;
   
+  // Geometric shapes with colorful gradients - inspired by Portfolio 2025
   const shapes = [
-    { size: 80, x: '10%', y: '20%', delay: 0, color: '#fd79a8' },
-    { size: 60, x: '80%', y: '15%', delay: 0.5, color: '#fdcb6e' },
-    { size: 100, x: '70%', y: '60%', delay: 1, color: '#00cec9' },
-    { size: 40, x: '20%', y: '70%', delay: 1.5, color: '#a29bfe' },
-    { size: 70, x: '50%', y: '80%', delay: 2, color: '#fd79a8' },
+    { type: 'circle', size: 120, x: '8%', y: '15%', delay: 0, color: '#ff6b6b', opacity: 0.6 },
+    { type: 'circle', size: 80, x: '85%', y: '20%', delay: 0.5, color: '#4ecdc4', opacity: 0.5 },
+    { type: 'circle', size: 150, x: '75%', y: '65%', delay: 1, color: '#ffe66d', opacity: 0.4 },
+    { type: 'circle', size: 60, x: '15%', y: '75%', delay: 1.5, color: '#a29bfe', opacity: 0.6 },
+    { type: 'circle', size: 100, x: '50%', y: '85%', delay: 2, color: '#ff6b6b', opacity: 0.3 },
+    // Add some smaller accent circles
+    { type: 'circle', size: 40, x: '30%', y: '30%', delay: 0.3, color: '#4ecdc4', opacity: 0.7 },
+    { type: 'circle', size: 30, x: '70%', y: '40%', delay: 0.8, color: '#ffe66d', opacity: 0.8 },
   ];
   
   return (
@@ -63,21 +67,23 @@ function FloatingShapes({ isPlayful }: { isPlayful: boolean }) {
       {shapes.map((shape, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full opacity-30 blur-xl"
+          className="absolute rounded-full"
           style={{
             width: shape.size,
             height: shape.size,
             left: shape.x,
             top: shape.y,
             backgroundColor: shape.color,
+            opacity: shape.opacity,
+            filter: 'blur(40px)',
           }}
           animate={{
-            y: [0, -30, 0],
-            x: [0, 15, 0],
-            scale: [1, 1.1, 1],
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+            scale: [1, 1.05, 1],
           }}
           transition={{
-            duration: 6,
+            duration: 8,
             delay: shape.delay,
             repeat: Infinity,
             ease: 'easeInOut',
