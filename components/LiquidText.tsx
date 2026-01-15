@@ -49,16 +49,11 @@ const fragmentShader = `
     float ripple = sin(dist * waveFrequency - uTime * waveSpeed) * waveStrength;
     ripple *= smoothstep(0.2, 0.0, dist); // Very tight falloff for localized effect
     
-    // Subtle continuous wave animation - much reduced
-    float wave = sin(uv.x * 20.0 + uTime * 0.8) * 0.002;
-    wave += sin(uv.y * 18.0 + uTime * 0.6) * 0.0015;
-    
-    // Apply distortion with controlled effect
+    // Apply distortion with controlled effect - only when hovering
     vec2 distortedUv = uv;
     float angle = atan(uv.y - mousePos.y, uv.x - mousePos.x);
     distortedUv.x += ripple * cos(angle) * DISTORTION_MULTIPLIER;
     distortedUv.y += ripple * sin(angle) * DISTORTION_MULTIPLIER;
-    distortedUv += wave;
     
     // Sample the texture with distorted UV
     vec4 color = texture2D(uTexture, distortedUv);
