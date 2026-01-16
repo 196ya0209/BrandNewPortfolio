@@ -310,6 +310,55 @@ export function Hero3D() {
 
       {/* Hero Section */}
       <div ref={containerRef} className={`relative w-full h-screen min-h-[100vh] overflow-hidden flex flex-col items-center justify-center ${isPlayful ? 'pt-20' : ''}`}>
+        {/* Sui theme - animated particles/orbs */}
+        {isSui && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {/* Floating orbs */}
+            <motion.div 
+              className="absolute w-[300px] h-[300px] rounded-full sui-float"
+              style={{ 
+                background: 'radial-gradient(circle, rgba(77, 162, 255, 0.15) 0%, transparent 70%)',
+                top: '10%', 
+                left: '10%',
+                filter: 'blur(40px)',
+              }}
+              animate={{ 
+                x: [0, 50, 0], 
+                y: [0, 30, 0],
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div 
+              className="absolute w-[400px] h-[400px] rounded-full"
+              style={{ 
+                background: 'radial-gradient(circle, rgba(111, 188, 240, 0.1) 0%, transparent 70%)',
+                bottom: '10%', 
+                right: '5%',
+                filter: 'blur(60px)',
+              }}
+              animate={{ 
+                x: [0, -40, 0], 
+                y: [0, -40, 0],
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            />
+            <motion.div 
+              className="absolute w-[200px] h-[200px] rounded-full"
+              style={{ 
+                background: 'radial-gradient(circle, rgba(77, 162, 255, 0.2) 0%, transparent 70%)',
+                top: '40%', 
+                right: '20%',
+                filter: 'blur(30px)',
+              }}
+              animate={{ 
+                x: [0, 30, 0], 
+                y: [0, -20, 0],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            />
+          </div>
+        )}
+        
         <motion.div 
           className="w-full flex-1 flex flex-col items-center justify-center px-4 z-10"
           style={{ y: heroY, opacity: heroOpacity }}
@@ -326,14 +375,14 @@ export function Hero3D() {
           {/* Full-width Horizontal Line - left to right animation */}
           <motion.hr
             initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: isPlayful ? 1 : 0.3 }}
+            animate={{ scaleX: 1, opacity: isPlayful ? 1 : isSui ? 0.5 : 0.3 }}
             transition={{
               duration: 1.5,
               delay: 0.6,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className={`w-full mx-auto my-1 ${isPlayful ? 'border-t-[3px]' : 'border-t'}`}
-            style={{ borderColor: 'var(--foreground)', transformOrigin: 'left' }}
+            className={`w-full mx-auto my-1 ${isPlayful ? 'border-t-[3px]' : 'border-t'} ${isSui ? 'sui-line-glow' : ''}`}
+            style={{ borderColor: isSui ? 'var(--primary)' : 'var(--foreground)', transformOrigin: 'left' }}
           />
 
           {/* Subtitle - Full Stack Developer */}
@@ -345,8 +394,8 @@ export function Hero3D() {
               delay: 0.9,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className={`text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wider mb-4 ${isPlayful ? 'retro-glitch font-bold' : ''} ${isSui ? 'sui-gradient-text' : ''}`}
-            style={{ color: 'var(--foreground)', fontFamily: 'var(--hero-font)' }}
+            className={`text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wider mb-4 ${isPlayful ? 'retro-glitch font-bold' : ''} ${isSui ? 'sui-gradient-text sui-float' : ''}`}
+            style={{ color: isSui ? undefined : 'var(--foreground)', fontFamily: 'var(--hero-font)' }}
             data-text="Full Stack Developer"
           >
             Full Stack Developer
@@ -362,10 +411,11 @@ export function Hero3D() {
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              className={`flex flex-col items-center gap-1 cursor-pointer ${isPlayful ? 'retro-shake' : ''}`}
+              className={`flex flex-col items-center gap-1 cursor-pointer ${isPlayful ? 'retro-shake' : ''} ${isSui ? 'sui-glow' : ''}`}
               onClick={() => aboutRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              style={isSui ? { padding: '12px', borderRadius: '50%', background: 'rgba(77, 162, 255, 0.1)' } : undefined}
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--secondary)' }}>Scroll</span>
+              <span className={`text-[10px] font-medium uppercase tracking-[0.2em] ${isSui ? 'sui-gradient-text' : ''}`} style={{ color: isSui ? undefined : 'var(--secondary)' }}>Scroll</span>
               <svg 
                 width="16" 
                 height="16" 
@@ -373,7 +423,7 @@ export function Hero3D() {
                 fill="none" 
                 stroke="currentColor" 
                 strokeWidth="1"
-                style={{ color: 'var(--secondary)' }}
+                style={{ color: isSui ? 'var(--primary)' : 'var(--secondary)' }}
               >
                 <path d="M12 5v14M5 12l7 7 7-7"/>
               </svg>

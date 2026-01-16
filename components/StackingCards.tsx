@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface Project {
@@ -67,7 +67,13 @@ function AnimatedLine({ delay = 0 }: { delay?: number }) {
 }
 
 // Geometric shapes component for card image overlay
-function GeometricShapes({ accentColor }: { accentColor: string }) {
+// Not shown in playful (neobrutalism) theme per user request
+function GeometricShapes({ accentColor, theme }: { accentColor: string; theme: string }) {
+  // Don't render geometric shapes in playful theme (user requested removal of floating elements)
+  if (theme === 'playful') {
+    return null;
+  }
+  
   return (
     <div className="absolute inset-0 pointer-events-none">
       {/* Circle */}
@@ -157,6 +163,25 @@ function GeometricShapes({ accentColor }: { accentColor: string }) {
 
 export function StackingCards() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [currentTheme, setCurrentTheme] = useState('professional');
+  
+  // Detect theme changes
+  useEffect(() => {
+    const checkTheme = () => {
+      const theme = document.documentElement.getAttribute('data-theme') || 'professional';
+      setCurrentTheme(theme);
+    };
+    
+    checkTheme();
+    
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['data-theme'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="py-24 md:py-32" style={{ backgroundColor: 'var(--background)' }}>
@@ -202,6 +227,7 @@ export function StackingCards() {
                 key={project.id}
                 project={project}
                 index={index}
+                theme={currentTheme}
               />
             ))}
           </div>
@@ -219,9 +245,10 @@ export function StackingCards() {
 interface ProjectCardProps {
   project: Project;
   index: number;
+  theme: string;
 }
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+function ProjectCard({ project, index, theme }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -366,7 +393,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
 
             {/* Geometric shapes overlay */}
-            <GeometricShapes accentColor={project.accentColor} />
+            <GeometricShapes accentColor={project.accentColor} theme={theme} />
           </div>
         </div>
       </motion.div>
