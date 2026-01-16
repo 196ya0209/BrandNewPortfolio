@@ -73,11 +73,15 @@ function SplitText({ children, className, style, delay = 0 }: { children: string
   );
 }
 
+// Marquee animation constants
+const MARQUEE_REPEAT_COUNT = 10;
+const MARQUEE_DURATION_SECONDS = 20;
+
 // Scrolling text marquee for neobrutalism theme
 function ScrollingTextBorder({ text, direction = 'left', theme }: { text: string; direction?: 'left' | 'right'; theme: string }) {
   if (theme !== 'playful') return null;
   
-  const repeatedText = Array(10).fill(text).join(' • ');
+  const repeatedText = Array(MARQUEE_REPEAT_COUNT).fill(text).join(' • ');
   
   return (
     <div className="w-full overflow-hidden py-3 border-y-3 border-black bg-white pointer-events-none">
@@ -87,7 +91,7 @@ function ScrollingTextBorder({ text, direction = 'left', theme }: { text: string
           x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
         }}
         transition={{
-          duration: 20,
+          duration: MARQUEE_DURATION_SECONDS,
           repeat: Infinity,
           ease: 'linear',
         }}
