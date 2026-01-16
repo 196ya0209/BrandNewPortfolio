@@ -1,35 +1,110 @@
 @import url('https://api.fontshare.com/v2/css?f[]=nohemi@400,500,600,700&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=supreme@400,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+/* Inter font for Sui theme - loading only weights used (400 regular, 500 medium, 600 semibold) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
-/* Theme CSS Variables - Professional is default */
-html[data-theme="professional"] {
-  --background: #ffffff;
-  --background-rgb: 255, 255, 255;
-  --foreground: #0a0a0a;
-  --primary: #2563eb;
-  --secondary: #64748b;
-  --accent: #0ea5e9;
-  --muted: #f1f5f9;
-  --border: #e2e8f0;
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
-  --hero-font: 'Nohemi', system-ui, sans-serif;
+/* Humane Font - Local web font */
+@font-face {
+  font-family: 'Humane';
+  src: url('/Fonts/Humane Font/Web-TT/Humane-Bold.woff2') format('woff2'),
+       url('/Fonts/Humane Font/Web-TT/Humane-Bold.woff') format('woff'),
+       url('/Fonts/Humane Font/Web-TT/Humane-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-html[data-theme="playful"] {
-  /* Blue-based playful palette inspired by Super Duper */
-  --background: #e8f4ff;
-  --background-rgb: 232, 244, 255;
-  --foreground: #0a1929;
-  --primary: #2196f3;
-  --secondary: #64b5f6;
-  --accent: #1976d2;
-  --muted: #f1f8ff;
-  --border: #90caf9;
+@font-face {
+  font-family: 'Humane';
+  src: url('/Fonts/Humane Font/Web-TT/Humane-SemiBold.woff2') format('woff2'),
+       url('/Fonts/Humane Font/Web-TT/Humane-SemiBold.woff') format('woff'),
+       url('/Fonts/Humane Font/Web-TT/Humane-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Humane';
+  src: url('/Fonts/Humane Font/Web-TT/Humane-Medium.woff2') format('woff2'),
+       url('/Fonts/Humane Font/Web-TT/Humane-Medium.woff') format('woff'),
+       url('/Fonts/Humane Font/Web-TT/Humane-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Humane';
+  src: url('/Fonts/Humane Font/Web-TT/Humane-Regular.woff2') format('woff2'),
+       url('/Fonts/Humane Font/Web-TT/Humane-Regular.woff') format('woff'),
+       url('/Fonts/Humane Font/Web-TT/Humane-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Theme CSS Variables - Professional is default (inspired by clarissemichard.com) */
+/* Using Humane as primary hero font */
+html[data-theme="professional"] {
+  --background: #f5f0e8;
+  --background-rgb: 245, 240, 232;
+  --foreground: #1a1a1a;
+  --primary: #1a1a1a;
+  --secondary: #666666;
+  --accent: #333333;
+  --muted: #ebe6de;
+  --border: #d4cfc7;
   --card-bg: #ffffff;
-  --card-border: #90caf9;
-  --hero-font: 'Supreme', 'Nohemi', system-ui, sans-serif;
+  --card-border: #d4cfc7;
+  --hero-font: 'Humane', 'Clash Display', 'Cabinet Grotesk', 'Nohemi', system-ui, sans-serif;
+}
+
+/* Neobrutalism Theme - Bold borders, bright colors, thick shadows */
+html[data-theme="playful"] {
+  --background: #fef3c7;
+  --background-rgb: 254, 243, 199;
+  --foreground: #0f0f0f;
+  --primary: #0f0f0f;
+  --secondary: #0f0f0f;
+  --accent: #ff6b6b;
+  --muted: #fde68a;
+  --border: #0f0f0f;
+  --card-bg: #ffffff;
+  --card-border: #0f0f0f;
+  --hero-font: 'Humane', 'Clash Display', 'Cabinet Grotesk', 'Supreme', 'Nohemi', system-ui, sans-serif;
+  /* Neobrutalism accent colors */
+  --neo-yellow: #fef3c7;
+  --neo-pink: #f472b6;
+  --neo-blue: #60a5fa;
+  --neo-green: #4ade80;
+  --neo-orange: #fb923c;
+  --neo-purple: #a78bfa;
+  --neo-red: #f87171;
+}
+
+/* Sui Theme - Modern, clean, tech-focused (inspired by sui.io) */
+html[data-theme="sui"] {
+  --background: #0a1628;
+  --background-rgb: 10, 22, 40;
+  --foreground: #ffffff;
+  --primary: #4da2ff;
+  --secondary: #8fbfff;
+  --accent: #6fbcf0;
+  --muted: #1a2940;
+  --border: #2a3f5f;
+  --card-bg: #0f1f35;
+  --card-border: #2a3f5f;
+  --hero-font: 'Inter', 'Nohemi', system-ui, sans-serif;
+  /* Sui gradient colors */
+  --sui-blue: #4da2ff;
+  --sui-light-blue: #6fbcf0;
+  --sui-dark: #0a1628;
+  --sui-gradient-start: #4da2ff;
+  --sui-gradient-end: #6fbcf0;
 }
 
 @theme inline {
@@ -51,10 +126,259 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Nohemi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  transition-property: background-color, color;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in-out;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
   overflow-x: hidden;
+}
+
+/* Sui theme uses Inter font */
+html[data-theme="sui"] body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Neobrutalism theme - no floating elements, clean solid colors */
+html[data-theme="playful"] body {
+  background: var(--background);
+}
+
+/* Neobrutalism button styles */
+html[data-theme="playful"] .neo-button {
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--border);
+  transition: all 0.15s ease;
+}
+
+html[data-theme="playful"] .neo-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--border);
+}
+
+html[data-theme="playful"] .neo-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--border);
+}
+
+/* Neobrutalism card styles */
+html[data-theme="playful"] .neo-card {
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 var(--border);
+  background: var(--card-bg);
+}
+
+html[data-theme="playful"] .neo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--border);
+}
+
+/* Scrolling text marquee for neobrutalism */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Retro 80s/90s glitch effect for neobrutalism */
+html[data-theme="playful"] .retro-glitch {
+  position: relative;
+}
+
+html[data-theme="playful"] .retro-glitch::before,
+html[data-theme="playful"] .retro-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+html[data-theme="playful"] .retro-glitch:hover::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--neo-pink);
+  animation: glitch-1 0.3s infinite linear alternate-reverse;
+  opacity: 0.8;
+}
+
+html[data-theme="playful"] .retro-glitch:hover::after {
+  left: -2px;
+  text-shadow: 2px 0 var(--neo-blue);
+  animation: glitch-2 0.3s infinite linear alternate-reverse;
+  opacity: 0.8;
+}
+
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(20% 0 60% 0); }
+  20% { clip-path: inset(10% 0 70% 0); }
+  40% { clip-path: inset(50% 0 30% 0); }
+  60% { clip-path: inset(30% 0 50% 0); }
+  80% { clip-path: inset(70% 0 10% 0); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(60% 0 20% 0); }
+  20% { clip-path: inset(70% 0 10% 0); }
+  40% { clip-path: inset(30% 0 50% 0); }
+  60% { clip-path: inset(50% 0 30% 0); }
+  80% { clip-path: inset(10% 0 70% 0); }
+}
+
+/* Retro shake animation */
+html[data-theme="playful"] .retro-shake:hover {
+  animation: retro-shake 0.5s ease-in-out;
+}
+
+@keyframes retro-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px) rotate(-1deg); }
+  20%, 40%, 60%, 80% { transform: translateX(2px) rotate(1deg); }
+}
+
+/* Sui theme gradient text */
+html[data-theme="sui"] .sui-gradient-text {
+  background: linear-gradient(135deg, var(--sui-blue), var(--sui-light-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sui theme animated gradient background */
+html[data-theme="sui"] body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(77, 162, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(111, 188, 240, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(77, 162, 255, 0.04) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+  animation: sui-pulse 8s ease-in-out infinite;
+}
+
+@keyframes sui-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Sui theme grid pattern overlay */
+html[data-theme="sui"] body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(77, 162, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 162, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Sui theme glow effects */
+html[data-theme="sui"] .sui-glow {
+  box-shadow: 0 0 20px rgba(77, 162, 255, 0.3),
+              0 0 40px rgba(77, 162, 255, 0.1);
+}
+
+html[data-theme="sui"] .sui-glow:hover {
+  box-shadow: 0 0 30px rgba(77, 162, 255, 0.5),
+              0 0 60px rgba(77, 162, 255, 0.2);
+}
+
+/* Sui theme button styles */
+html[data-theme="sui"] .sui-button {
+  background: linear-gradient(135deg, var(--sui-blue), var(--sui-light-blue));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+html[data-theme="sui"] .sui-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+html[data-theme="sui"] .sui-button:hover::before {
+  left: 100%;
+}
+
+html[data-theme="sui"] .sui-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(77, 162, 255, 0.4);
+}
+
+/* Sui theme card styles */
+html[data-theme="sui"] .sui-card {
+  background: rgba(15, 31, 53, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+html[data-theme="sui"] .sui-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sui-blue), transparent);
+  opacity: 0.5;
+}
+
+/* Sui theme text reveal animation */
+html[data-theme="sui"] .sui-text-reveal {
+  animation: sui-text-reveal 0.8s ease-out forwards;
+}
+
+@keyframes sui-text-reveal {
+  0% { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Sui theme floating element */
+html[data-theme="sui"] .sui-float {
+  animation: sui-float 6s ease-in-out infinite;
+}
+
+@keyframes sui-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Sui theme line glow */
+html[data-theme="sui"] .sui-line-glow {
+  box-shadow: 0 0 10px var(--sui-blue), 0 0 20px rgba(77, 162, 255, 0.3);
 }
 
 /* Navbar Styles */
@@ -64,7 +388,7 @@ body {
 }
 
 html[data-theme="playful"] .navbar-scrolled {
-  box-shadow: 0 8px 16px -4px rgba(33, 150, 243, 0.15);
+  box-shadow: 0 8px 16px -4px rgba(255, 107, 53, 0.15);
 }
 
 .active-link {
@@ -93,7 +417,7 @@ html[data-theme="playful"] .navbar-scrolled {
 }
 
 html[data-theme="playful"] .card-hover:hover {
-  box-shadow: 0 20px 25px -5px rgba(33, 150, 243, 0.12), 0 10px 10px -5px rgba(33, 150, 243, 0.06);
+  box-shadow: 0 20px 25px -5px rgba(255, 107, 53, 0.12), 0 10px 10px -5px rgba(255, 107, 53, 0.06);
 }
 
 /* Respect reduced motion preference */

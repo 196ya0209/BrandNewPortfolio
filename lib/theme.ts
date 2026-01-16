@@ -2,9 +2,11 @@
  * Theme types and utilities
  */
 
-export type Theme = 'professional' | 'playful';
+export type Theme = 'professional' | 'playful' | 'sui';
 
 export const THEME_COOKIE_NAME = 'portfolio-theme';
+
+export const THEMES: Theme[] = ['professional', 'playful', 'sui'];
 
 export function getThemeFromCookie(cookieString?: string): Theme | null {
   if (!cookieString) return null;
@@ -19,7 +21,7 @@ export function getThemeFromCookie(cookieString?: string): Theme | null {
   }, {} as Record<string, string>);
   
   const theme = cookies[THEME_COOKIE_NAME];
-  if (theme === 'professional' || theme === 'playful') {
+  if (theme === 'professional' || theme === 'playful' || theme === 'sui') {
     return theme;
   }
   
