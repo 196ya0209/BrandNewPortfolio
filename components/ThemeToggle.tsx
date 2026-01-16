@@ -2,6 +2,18 @@
 
 import { useTheme } from './ThemeProvider';
 
+const themeIcons: Record<string, string> = {
+  professional: '💼',
+  playful: '🎨',
+  sui: '🌊',
+};
+
+const themeLabels: Record<string, string> = {
+  professional: 'Professional',
+  playful: 'Neobrutalism',
+  sui: 'Sui',
+};
+
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
@@ -13,12 +25,13 @@ export function ThemeToggle() {
         backgroundColor: 'var(--card-bg)',
         borderColor: 'var(--border)',
         color: 'var(--foreground)',
-        border: '1px solid',
+        border: theme === 'playful' ? '3px solid var(--border)' : '1px solid',
+        boxShadow: theme === 'playful' ? '3px 3px 0 var(--border)' : 'none',
       }}
-      aria-label={`Switch to ${theme === 'professional' ? 'playful' : 'professional'} theme`}
+      aria-label={`Current theme: ${themeLabels[theme]}. Click to switch theme.`}
       type="button"
     >
-      {theme === 'professional' ? '🎨' : '💼'}
+      {themeIcons[theme]}
     </button>
   );
 }

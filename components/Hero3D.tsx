@@ -7,7 +7,7 @@ import { LiquidText } from './LiquidText';
 // Color palettes for "Surprise Me" feature (no dark themes)
 const colorPalettes = [
   { bg: '#f5f0e8', fg: '#1a1a1a', accent: '#333333' }, // Cream/Dark (default professional)
-  { bg: '#ffe066', fg: '#1a1a1a', accent: '#ff8fab' }, // Yellow/Black (playful default)
+  { bg: '#fef3c7', fg: '#0f0f0f', accent: '#ff6b6b' }, // Warm yellow (neobrutalism)
   { bg: '#e9c46a', fg: '#264653', accent: '#2a9d8f' }, // Gold/Teal
   { bg: '#f1faee', fg: '#e63946', accent: '#457b9d' }, // White/Red
   { bg: '#dfe6e9', fg: '#2d3436', accent: '#0984e3' }, // Gray/Blue
@@ -73,51 +73,28 @@ function SplitText({ children, className, style, delay = 0 }: { children: string
   );
 }
 
-// Floating geometric shapes for playful mode - rich animations
-function PlayfulShapes({ isPlayful }: { isPlayful: boolean }) {
-  if (!isPlayful) return null;
+// Scrolling text marquee for neobrutalism theme
+function ScrollingTextBorder({ text, direction = 'left', theme }: { text: string; direction?: 'left' | 'right'; theme: string }) {
+  if (theme !== 'playful') return null;
   
-  const shapes = [
-    { type: 'circle', size: 80, x: '5%', y: '15%', delay: 0, color: '#ff8fab', rotation: 0 },
-    { type: 'square', size: 60, x: '90%', y: '10%', delay: 0.5, color: '#74b9ff', rotation: 45 },
-    { type: 'circle', size: 100, x: '85%', y: '70%', delay: 1, color: '#55efc4', rotation: 0 },
-    { type: 'square', size: 50, x: '10%', y: '80%', delay: 1.5, color: '#ffeaa7', rotation: 15 },
-    { type: 'circle', size: 40, x: '50%', y: '5%', delay: 2, color: '#ff9f43', rotation: 0 },
-    { type: 'square', size: 70, x: '70%', y: '40%', delay: 0.3, color: '#a29bfe', rotation: 30 },
-    { type: 'circle', size: 30, x: '25%', y: '60%', delay: 0.8, color: '#fd79a8', rotation: 0 },
-    { type: 'square', size: 45, x: '40%', y: '85%', delay: 1.2, color: '#00cec9', rotation: 60 },
-  ];
+  const repeatedText = Array(10).fill(text).join(' • ');
   
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {shapes.map((shape, i) => (
-        <motion.div
-          key={i}
-          className={`absolute ${shape.type === 'circle' ? 'rounded-full' : ''}`}
-          style={{
-            width: shape.size,
-            height: shape.size,
-            left: shape.x,
-            top: shape.y,
-            backgroundColor: shape.color,
-            border: '3px solid #1a1a1a',
-            rotate: shape.rotation,
-          }}
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{
-            scale: 1,
-            opacity: 1,
-            y: [0, -15, 0],
-            rotate: [shape.rotation, shape.rotation + 5, shape.rotation],
-          }}
-          transition={{
-            scale: { duration: 0.5, delay: shape.delay },
-            opacity: { duration: 0.5, delay: shape.delay },
-            y: { duration: 6, delay: shape.delay, repeat: Infinity, ease: 'easeInOut' },
-            rotate: { duration: 8, delay: shape.delay, repeat: Infinity, ease: 'easeInOut' },
-          }}
-        />
-      ))}
+    <div className="w-full overflow-hidden py-3 border-y-3 border-black bg-white pointer-events-none">
+      <motion.div
+        className="whitespace-nowrap font-bold text-lg tracking-wide"
+        animate={{
+          x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        style={{ color: 'var(--foreground)' }}
+      >
+        {repeatedText}
+      </motion.div>
     </div>
   );
 }
@@ -126,7 +103,7 @@ export function Hero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const [currentPalette, setCurrentPalette] = useState<number | null>(null);
-  const [isPlayful, setIsPlayful] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('professional');
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -139,8 +116,8 @@ export function Hero3D() {
   // Detect theme changes
   useEffect(() => {
     const checkTheme = () => {
-      const theme = document.documentElement.getAttribute('data-theme');
-      setIsPlayful(theme === 'playful');
+      const theme = document.documentElement.getAttribute('data-theme') || 'professional';
+      setCurrentTheme(theme);
     };
     
     checkTheme();
@@ -153,6 +130,9 @@ export function Hero3D() {
     
     return () => observer.disconnect();
   }, []);
+
+  const isPlayful = currentTheme === 'playful';
+  const isSui = currentTheme === 'sui';
 
   // Surprise Me - Random color change
   const handleSurpriseMe = useCallback(() => {
@@ -184,18 +164,41 @@ export function Hero3D() {
     document.documentElement.style.removeProperty('--border');
   }, []);
 
+  // Get theme-specific styles
+  const getHeaderStyle = () => {
+    if (isPlayful) {
+      return {
+        border: '3px solid var(--border)',
+        boxShadow: '4px 4px 0 var(--border)',
+        backgroundColor: 'var(--card-bg)',
+      };
+    }
+    if (isSui) {
+      return {
+        backgroundColor: 'rgba(10, 22, 40, 0.8)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid var(--border)',
+      };
+    }
+    return {};
+  };
+
   return (
     <>
       {/* Header bar - slim with full-width line below */}
       <div className="fixed top-0 left-0 right-0 z-50">
-        <div className="px-6 py-3 flex items-center justify-between">
+        <div 
+          className={`px-6 py-3 flex items-center justify-between ${isPlayful ? 'mx-4 mt-2 rounded-lg' : ''}`}
+          style={getHeaderStyle()}
+        >
           {/* Left - Hola */}
           <motion.span
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xs font-medium tracking-wider"
+            className={`text-xs font-medium tracking-wider ${isPlayful ? 'retro-glitch' : ''} ${isSui ? 'sui-gradient-text' : ''}`}
             style={{ color: 'var(--foreground)' }}
+            data-text="Hola"
           >
             Hola
           </motion.span>
@@ -208,14 +211,14 @@ export function Hero3D() {
             className="absolute left-1/2 -translate-x-1/2 text-center"
           >
             <span 
-              className="text-xs font-medium tracking-wider"
+              className={`text-xs font-medium tracking-wider ${isSui ? 'sui-gradient-text' : ''}`}
               style={{ color: 'var(--foreground)' }}
             >
               Portfolio
             </span>
           </motion.div>
 
-          {/* Right - Professional text with line + Surprise Me icon */}
+          {/* Right - Theme name with line + Surprise Me icon */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -224,16 +227,16 @@ export function Hero3D() {
           >
             <div className="flex flex-col items-end">
               <span 
-                className="text-xs font-medium tracking-wider"
+                className={`text-xs font-medium tracking-wider ${isSui ? 'sui-gradient-text' : ''}`}
                 style={{ color: 'var(--foreground)' }}
               >
-                {isPlayful ? 'Playful' : 'Professional'}
+                {isPlayful ? 'Neobrutalism' : isSui ? 'Sui' : 'Professional'}
               </span>
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="w-12 h-[1px] mt-0.5"
+                className={`w-12 mt-0.5 ${isPlayful ? 'h-[3px]' : 'h-[1px]'}`}
                 style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'right' }}
               />
             </div>
@@ -241,12 +244,13 @@ export function Hero3D() {
             {/* Surprise Me Icon Button */}
             <motion.button
               onClick={handleSurpriseMe}
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isPlayful ? 'neo-button rounded-lg' : ''} ${isSui ? 'sui-button' : ''}`}
               style={{ 
-                backgroundColor: 'var(--foreground)', 
-                color: 'var(--background)',
+                backgroundColor: isSui ? 'transparent' : 'var(--foreground)', 
+                color: isSui ? 'var(--primary)' : 'var(--background)',
+                border: isSui ? '1px solid var(--primary)' : 'none',
               }}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: isPlayful ? 1 : 1.1 }}
               whileTap={{ scale: 0.95 }}
               title="Surprise Me"
             >
@@ -284,22 +288,24 @@ export function Hero3D() {
         </div>
         
         {/* Full-width horizontal line below header - left to right animation */}
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 0.15 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-          className="w-full h-[1px]"
-          style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'left' }}
-        />
+        {!isPlayful && (
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: isSui ? 0.3 : 0.15 }}
+            transition={{ duration: 1.2, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
+            className="w-full h-[1px]"
+            style={{ backgroundColor: 'var(--foreground)', transformOrigin: 'left' }}
+          />
+        )}
       </div>
 
-      {/* Floating shapes for playful mode */}
-      <AnimatePresence>
-        <PlayfulShapes isPlayful={isPlayful} />
-      </AnimatePresence>
+      {/* Scrolling text border for neobrutalism theme - top */}
+      <div className="fixed top-[60px] left-0 right-0 z-30 pointer-events-none">
+        <ScrollingTextBorder text="DREAMER • DEVELOPER • DESIGNER • CREATOR" direction="left" theme={currentTheme} />
+      </div>
 
       {/* Hero Section */}
-      <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex flex-col items-center justify-center">
+      <div ref={containerRef} className={`relative w-full h-screen min-h-[100vh] overflow-hidden flex flex-col items-center justify-center ${isPlayful ? 'pt-20' : ''}`}>
         <motion.div 
           className="w-full flex-1 flex flex-col items-center justify-center px-4 z-10"
           style={{ y: heroY, opacity: heroOpacity }}
@@ -316,13 +322,13 @@ export function Hero3D() {
           {/* Full-width Horizontal Line - left to right animation */}
           <motion.hr
             initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 0.3 }}
+            animate={{ scaleX: 1, opacity: isPlayful ? 1 : 0.3 }}
             transition={{
               duration: 1.5,
               delay: 0.6,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className="w-full mx-auto border-t my-1"
+            className={`w-full mx-auto my-1 ${isPlayful ? 'border-t-[3px]' : 'border-t'}`}
             style={{ borderColor: 'var(--foreground)', transformOrigin: 'left' }}
           />
 
@@ -335,8 +341,9 @@ export function Hero3D() {
               delay: 0.9,
               ease: [0.25, 0.4, 0.25, 1],
             }}
-            className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wider mb-4"
+            className={`text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wider mb-4 ${isPlayful ? 'retro-glitch font-bold' : ''} ${isSui ? 'sui-gradient-text' : ''}`}
             style={{ color: 'var(--foreground)', fontFamily: 'var(--hero-font)' }}
+            data-text="Full Stack Developer"
           >
             Full Stack Developer
           </motion.p>
@@ -351,7 +358,7 @@ export function Hero3D() {
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              className="flex flex-col items-center gap-1 cursor-pointer"
+              className={`flex flex-col items-center gap-1 cursor-pointer ${isPlayful ? 'retro-shake' : ''}`}
               onClick={() => aboutRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
               <span className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--secondary)' }}>Scroll</span>
@@ -371,17 +378,20 @@ export function Hero3D() {
         </motion.div>
       </div>
 
+      {/* Scrolling text border for neobrutalism theme - between sections */}
+      <ScrollingTextBorder text="REACT • NEXT.JS • TYPESCRIPT • NODE.JS • UI/UX" direction="right" theme={currentTheme} />
+
       {/* About Section - Same background, smooth character slide-up reveal */}
       <div 
         ref={aboutRef}
         className="relative w-full min-h-screen flex items-center justify-center py-32 px-6 z-10"
       >
-        <div className="max-w-5xl mx-auto">
+        <div className={`max-w-5xl mx-auto ${isPlayful ? 'neo-card p-8 rounded-lg' : ''} ${isSui ? 'sui-card p-8' : ''}`}>
           <div className="text-center">
             {/* Main paragraph with smooth character-by-character reveal */}
             <p 
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.4] font-medium mb-16"
-              style={{ color: 'var(--foreground)' }}
+              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.4] font-medium mb-16 ${isSui ? 'sui-gradient-text' : ''}`}
+              style={{ color: isSui ? undefined : 'var(--foreground)' }}
             >
               <SplitTextCharacter delay={0}>
                 I&apos;m a passionate developer who loves creating beautiful, functional, and user-friendly digital experiences that make a difference.
@@ -419,17 +429,17 @@ export function Hero3D() {
               {['React & Next.js', 'TypeScript', 'Node.js', 'UI/UX Design', 'WebGL', 'Animation'].map((skill, index) => (
                 <motion.span 
                   key={skill}
-                  className="px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer"
+                  className={`px-5 py-2.5 text-sm font-medium cursor-pointer ${isPlayful ? 'neo-button rounded-lg' : 'rounded-full'} ${isSui ? 'sui-button' : ''}`}
                   style={{ 
-                    backgroundColor: 'transparent', 
+                    backgroundColor: isPlayful ? 'var(--card-bg)' : isSui ? 'transparent' : 'transparent', 
                     color: 'var(--foreground)',
-                    border: '1px solid var(--border)'
+                    border: isSui ? '1px solid var(--primary)' : isPlayful ? '3px solid var(--border)' : '1px solid var(--border)'
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.7 + index * 0.08 }}
-                  whileHover={{ 
+                  whileHover={isPlayful ? {} : { 
                     backgroundColor: 'var(--foreground)', 
                     color: 'var(--background)',
                     transition: { duration: 0.3 }
@@ -442,6 +452,9 @@ export function Hero3D() {
           </div>
         </div>
       </div>
+
+      {/* Bottom scrolling text border for neobrutalism theme */}
+      <ScrollingTextBorder text="LET'S BUILD SOMETHING AMAZING TOGETHER" direction="left" theme={currentTheme} />
     </>
   );
 }

@@ -2,6 +2,7 @@
 @import url('https://api.fontshare.com/v2/css?f[]=supreme@400,700&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 /* Humane Font - Local web font */
@@ -61,25 +62,48 @@ html[data-theme="professional"] {
   --hero-font: 'Humane', 'Clash Display', 'Cabinet Grotesk', 'Nohemi', system-ui, sans-serif;
 }
 
+/* Neobrutalism Theme - Bold borders, bright colors, thick shadows */
 html[data-theme="playful"] {
-  /* Colorful bright theme - inspired by Portfolio 2025 reference */
-  --background: #ffe066;
-  --background-rgb: 255, 224, 102;
-  --foreground: #1a1a1a;
-  --primary: #ff6b6b;
-  --secondary: #1a1a1a;
-  --accent: #ff8fab;
-  --muted: #ffeaa7;
-  --border: #1a1a1a;
+  --background: #fef3c7;
+  --background-rgb: 254, 243, 199;
+  --foreground: #0f0f0f;
+  --primary: #0f0f0f;
+  --secondary: #0f0f0f;
+  --accent: #ff6b6b;
+  --muted: #fde68a;
+  --border: #0f0f0f;
   --card-bg: #ffffff;
-  --card-border: #1a1a1a;
+  --card-border: #0f0f0f;
   --hero-font: 'Humane', 'Clash Display', 'Cabinet Grotesk', 'Supreme', 'Nohemi', system-ui, sans-serif;
-  /* Colorful accent colors */
-  --playful-yellow: #ffe066;
-  --playful-pink: #ff8fab;
-  --playful-orange: #ff9f43;
-  --playful-blue: #74b9ff;
-  --playful-green: #55efc4;
+  /* Neobrutalism accent colors */
+  --neo-yellow: #fef3c7;
+  --neo-pink: #f472b6;
+  --neo-blue: #60a5fa;
+  --neo-green: #4ade80;
+  --neo-orange: #fb923c;
+  --neo-purple: #a78bfa;
+  --neo-red: #f87171;
+}
+
+/* Sui Theme - Modern, clean, tech-focused (inspired by sui.io) */
+html[data-theme="sui"] {
+  --background: #0a1628;
+  --background-rgb: 10, 22, 40;
+  --foreground: #ffffff;
+  --primary: #4da2ff;
+  --secondary: #8fbfff;
+  --accent: #6fbcf0;
+  --muted: #1a2940;
+  --border: #2a3f5f;
+  --card-bg: #0f1f35;
+  --card-border: #2a3f5f;
+  --hero-font: 'Inter', 'Nohemi', system-ui, sans-serif;
+  /* Sui gradient colors */
+  --sui-blue: #4da2ff;
+  --sui-light-blue: #6fbcf0;
+  --sui-dark: #0a1628;
+  --sui-gradient-start: #4da2ff;
+  --sui-gradient-end: #6fbcf0;
 }
 
 @theme inline {
@@ -105,78 +129,162 @@ body {
   overflow-x: hidden;
 }
 
-/* Playful theme bright colorful background */
+/* Sui theme uses Inter font */
+html[data-theme="sui"] body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Neobrutalism theme - no floating elements, clean solid colors */
 html[data-theme="playful"] body {
   background: var(--background);
 }
 
-/* Playful theme animated background shapes */
-html[data-theme="playful"] body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, var(--playful-pink) 0%, transparent 30%),
-    radial-gradient(circle at 80% 30%, var(--playful-orange) 0%, transparent 25%),
-    radial-gradient(circle at 40% 70%, var(--playful-blue) 0%, transparent 20%),
-    radial-gradient(circle at 70% 80%, var(--playful-green) 0%, transparent 25%);
-  opacity: 0.4;
-  animation: playfulBgShift 15s ease-in-out infinite;
+/* Neobrutalism button styles */
+html[data-theme="playful"] .neo-button {
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--border);
+  transition: all 0.15s ease;
 }
 
-@keyframes playfulBgShift {
-  0%, 100% {
-    transform: scale(1) translate(0, 0);
-  }
-  25% {
-    transform: scale(1.05) translate(2%, 1%);
-  }
-  50% {
-    transform: scale(1) translate(0, 2%);
-  }
-  75% {
-    transform: scale(1.05) translate(-2%, 1%);
-  }
+html[data-theme="playful"] .neo-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--border);
 }
 
-/* Playful mode floating geometric shapes */
-html[data-theme="playful"] .playful-shapes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
+html[data-theme="playful"] .neo-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--border);
+}
+
+/* Neobrutalism card styles */
+html[data-theme="playful"] .neo-card {
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 var(--border);
+  background: var(--card-bg);
+}
+
+html[data-theme="playful"] .neo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--border);
+}
+
+/* Scrolling text marquee for neobrutalism */
+.marquee-container {
   overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
 }
 
-html[data-theme="playful"] .playful-shape {
+.marquee-content {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Retro 80s/90s glitch effect for neobrutalism */
+html[data-theme="playful"] .retro-glitch {
+  position: relative;
+}
+
+html[data-theme="playful"] .retro-glitch::before,
+html[data-theme="playful"] .retro-glitch::after {
+  content: attr(data-text);
   position: absolute;
-  border: 3px solid #1a1a1a;
-  animation: floatShape 8s ease-in-out infinite;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 
-html[data-theme="playful"] .playful-shape.circle {
-  border-radius: 50%;
+html[data-theme="playful"] .retro-glitch:hover::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--neo-pink);
+  animation: glitch-1 0.3s infinite linear alternate-reverse;
+  opacity: 0.8;
 }
 
-html[data-theme="playful"] .playful-shape.square {
-  border-radius: 0;
+html[data-theme="playful"] .retro-glitch:hover::after {
+  left: -2px;
+  text-shadow: 2px 0 var(--neo-blue);
+  animation: glitch-2 0.3s infinite linear alternate-reverse;
+  opacity: 0.8;
 }
 
-@keyframes floatShape {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(10deg);
-  }
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(20% 0 60% 0); }
+  20% { clip-path: inset(10% 0 70% 0); }
+  40% { clip-path: inset(50% 0 30% 0); }
+  60% { clip-path: inset(30% 0 50% 0); }
+  80% { clip-path: inset(70% 0 10% 0); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(60% 0 20% 0); }
+  20% { clip-path: inset(70% 0 10% 0); }
+  40% { clip-path: inset(30% 0 50% 0); }
+  60% { clip-path: inset(50% 0 30% 0); }
+  80% { clip-path: inset(10% 0 70% 0); }
+}
+
+/* Retro shake animation */
+html[data-theme="playful"] .retro-shake:hover {
+  animation: retro-shake 0.5s ease-in-out;
+}
+
+@keyframes retro-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px) rotate(-1deg); }
+  20%, 40%, 60%, 80% { transform: translateX(2px) rotate(1deg); }
+}
+
+/* Sui theme gradient text */
+html[data-theme="sui"] .sui-gradient-text {
+  background: linear-gradient(135deg, var(--sui-blue), var(--sui-light-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sui theme glow effects */
+html[data-theme="sui"] .sui-glow {
+  box-shadow: 0 0 20px rgba(77, 162, 255, 0.3),
+              0 0 40px rgba(77, 162, 255, 0.1);
+}
+
+html[data-theme="sui"] .sui-glow:hover {
+  box-shadow: 0 0 30px rgba(77, 162, 255, 0.5),
+              0 0 60px rgba(77, 162, 255, 0.2);
+}
+
+/* Sui theme button styles */
+html[data-theme="sui"] .sui-button {
+  background: linear-gradient(135deg, var(--sui-blue), var(--sui-light-blue));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+html[data-theme="sui"] .sui-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(77, 162, 255, 0.4);
+}
+
+/* Sui theme card styles */
+html[data-theme="sui"] .sui-card {
+  background: rgba(15, 31, 53, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
 }
 
 /* Navbar Styles */
