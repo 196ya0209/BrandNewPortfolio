@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { LiquidText } from './LiquidText';
+import { useThemeDetection } from '@/lib/useThemeDetection';
 
 // Color palettes for "Surprise Me" feature (no dark themes)
 const colorPalettes = [
@@ -107,7 +108,7 @@ export function Hero3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const [currentPalette, setCurrentPalette] = useState<number | null>(null);
-  const [currentTheme, setCurrentTheme] = useState('professional');
+  const currentTheme = useThemeDetection();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -116,24 +117,6 @@ export function Hero3D() {
   
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  // Detect theme changes
-  useEffect(() => {
-    const checkTheme = () => {
-      const theme = document.documentElement.getAttribute('data-theme') || 'professional';
-      setCurrentTheme(theme);
-    };
-    
-    checkTheme();
-    
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ['data-theme'] 
-    });
-    
-    return () => observer.disconnect();
-  }, []);
 
   const isPlayful = currentTheme === 'playful';
   const isSui = currentTheme === 'sui';
@@ -395,7 +378,7 @@ export function Hero3D() {
               ease: [0.25, 0.4, 0.25, 1],
             }}
             className={`text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wider mb-4 ${isPlayful ? 'retro-glitch font-bold' : ''} ${isSui ? 'sui-gradient-text sui-float' : ''}`}
-            style={{ color: isSui ? undefined : 'var(--foreground)', fontFamily: 'var(--hero-font)' }}
+            style={{ color: isSui ? 'inherit' : 'var(--foreground)', fontFamily: 'var(--hero-font)' }}
             data-text="Full Stack Developer"
           >
             Full Stack Developer
@@ -415,7 +398,7 @@ export function Hero3D() {
               onClick={() => aboutRef.current?.scrollIntoView({ behavior: 'smooth' })}
               style={isSui ? { padding: '12px', borderRadius: '50%', background: 'rgba(77, 162, 255, 0.1)' } : undefined}
             >
-              <span className={`text-[10px] font-medium uppercase tracking-[0.2em] ${isSui ? 'sui-gradient-text' : ''}`} style={{ color: isSui ? undefined : 'var(--secondary)' }}>Scroll</span>
+              <span className={`text-[10px] font-medium uppercase tracking-[0.2em] ${isSui ? 'sui-gradient-text' : ''}`} style={{ color: isSui ? 'inherit' : 'var(--secondary)' }}>Scroll</span>
               <svg 
                 width="16" 
                 height="16" 
@@ -445,7 +428,7 @@ export function Hero3D() {
             {/* Main paragraph with smooth character-by-character reveal */}
             <p 
               className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.4] font-medium mb-16 ${isSui ? 'sui-gradient-text' : ''}`}
-              style={{ color: isSui ? undefined : 'var(--foreground)' }}
+              style={{ color: isSui ? 'inherit' : 'var(--foreground)' }}
             >
               <SplitTextCharacter delay={0}>
                 I&apos;m a passionate developer who loves creating beautiful, functional, and user-friendly digital experiences that make a difference.

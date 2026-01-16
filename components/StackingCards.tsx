@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useThemeDetection } from '@/lib/useThemeDetection';
 
 interface Project {
   id: number;
@@ -163,25 +164,7 @@ function GeometricShapes({ accentColor, theme }: { accentColor: string; theme: s
 
 export function StackingCards() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentTheme, setCurrentTheme] = useState('professional');
-  
-  // Detect theme changes
-  useEffect(() => {
-    const checkTheme = () => {
-      const theme = document.documentElement.getAttribute('data-theme') || 'professional';
-      setCurrentTheme(theme);
-    };
-    
-    checkTheme();
-    
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ['data-theme'] 
-    });
-    
-    return () => observer.disconnect();
-  }, []);
+  const currentTheme = useThemeDetection();
 
   return (
     <section className="py-24 md:py-32" style={{ backgroundColor: 'var(--background)' }}>
