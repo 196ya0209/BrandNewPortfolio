@@ -15,7 +15,8 @@ export function Hero3D() {
   const isInView = useInView(containerRef, { once: true });
 
   useEffect(() => {
-    // Parallax scroll effect for hero
+    // Parallax scroll effect for hero - reduced from 20 to 15 for subtler movement
+    // that doesn't distract from the main content while still providing depth
     if (containerRef.current) {
       gsap.to(containerRef.current, {
         yPercent: 15,

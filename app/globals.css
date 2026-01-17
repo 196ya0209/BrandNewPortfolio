@@ -81,10 +81,10 @@ body {
 
 /* Floating Orb Animation */
 @keyframes float {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  25% { transform: translateY(-20px) translateX(10px); }
-  50% { transform: translateY(-10px) translateX(-10px); }
-  75% { transform: translateY(-25px) translateX(5px); }
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(10px, -20px, 0); }
+  50% { transform: translate3d(-10px, -10px, 0); }
+  75% { transform: translate3d(5px, -25px, 0); }
 }
 
 @keyframes pulse-glow {
@@ -96,6 +96,7 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
+  will-change: transform, opacity;
   animation: float 8s ease-in-out infinite, pulse-glow 4s ease-in-out infinite;
 }
 
@@ -193,8 +194,10 @@ html[data-theme="playful"] .card-hover:hover {
     transform: none;
   }
   
+  /* Show static glow orbs with reduced opacity instead of hiding completely */
   .glow-orb {
     animation: none;
+    opacity: 0.2;
   }
   
   *,
