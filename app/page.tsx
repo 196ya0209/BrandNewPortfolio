@@ -5,6 +5,9 @@ import { StackingCards } from '@/components/StackingCards';
 export default function Home() {
   return (
     <div className="min-h-screen">
+      {/* Gradient background overlay */}
+      <div className="gradient-bg" />
+
       {/* 3D Animated Hero Section */}
       <Hero3D />
 
@@ -12,54 +15,84 @@ export default function Home() {
       <StackingCards />
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
+      <section className="container mx-auto px-4 py-24 md:py-32 relative">
+        {/* Section glow */}
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] -z-10 opacity-20"
+          style={{
+            background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        
+        <div className="max-w-6xl mx-auto">
           <ScrollReveal>
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-12 text-center"
-              style={{ color: 'var(--foreground)' }}
-            >
-              Features
-            </h2>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-2 gap-8">
-            <ScrollReveal delay={0.1}>
-              <div
-                className="p-8 rounded-xl border-2 card-hover"
-                style={{
-                  backgroundColor: 'var(--card-bg)',
-                  borderColor: 'var(--border)',
+            <div className="text-center mb-16">
+              <span 
+                className="inline-block px-4 py-2 rounded-full text-sm font-medium tracking-wide uppercase mb-6"
+                style={{ 
+                  background: 'rgba(77, 162, 255, 0.1)',
+                  border: '1px solid rgba(77, 162, 255, 0.3)',
+                  color: 'var(--primary)'
                 }}
               >
-                <div className="text-4xl mb-4">✨</div>
+                What I Offer
+              </span>
+              <h2
+                className="text-4xl md:text-6xl font-bold text-gradient"
+              >
+                Features & Capabilities
+              </h2>
+            </div>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ScrollReveal delay={0.1}>
+              <div
+                className="p-8 rounded-2xl card-hover group h-full"
+                style={{
+                  backgroundColor: 'var(--card-bg)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                }}
+              >
+                <div 
+                  className="text-4xl mb-6 w-16 h-16 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(77, 162, 255, 0.1)' }}
+                >
+                  ✨
+                </div>
                 <h3
-                  className="text-xl font-semibold mb-3"
+                  className="text-xl font-bold mb-4"
                   style={{ color: 'var(--foreground)' }}
                 >
-                  Dual-Mode Themes
+                  Modern Design
                 </h3>
-                <p style={{ color: 'var(--secondary)' }}>
-                  Switch between Professional and Playful themes to match your mood and context.
+                <p className="font-light leading-relaxed" style={{ color: 'var(--secondary)' }}>
+                  Clean, minimal aesthetics with smooth animations and cutting-edge visual effects.
                 </p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <div
-                className="p-8 rounded-xl border-2 card-hover"
+                className="p-8 rounded-2xl card-hover group h-full"
                 style={{
                   backgroundColor: 'var(--card-bg)',
-                  borderColor: 'var(--border)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <div className="text-4xl mb-4">♿</div>
+                <div 
+                  className="text-4xl mb-6 w-16 h-16 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(157, 78, 221, 0.1)' }}
+                >
+                  ♿
+                </div>
                 <h3
-                  className="text-xl font-semibold mb-3"
+                  className="text-xl font-bold mb-4"
                   style={{ color: 'var(--foreground)' }}
                 >
                   Fully Accessible
                 </h3>
-                <p style={{ color: 'var(--secondary)' }}>
+                <p className="font-light leading-relaxed" style={{ color: 'var(--secondary)' }}>
                   Complete keyboard navigation support and screen reader friendly design.
                 </p>
               </div>
@@ -67,84 +100,104 @@ export default function Home() {
 
             <ScrollReveal delay={0.3}>
               <div
-                className="p-8 rounded-xl border-2 card-hover"
+                className="p-8 rounded-2xl card-hover group h-full"
                 style={{
                   backgroundColor: 'var(--card-bg)',
-                  borderColor: 'var(--border)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <div className="text-4xl mb-4">🎨</div>
+                <div 
+                  className="text-4xl mb-6 w-16 h-16 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(16, 185, 129, 0.1)' }}
+                >
+                  ⚡
+                </div>
                 <h3
-                  className="text-xl font-semibold mb-3"
+                  className="text-xl font-bold mb-4"
                   style={{ color: 'var(--foreground)' }}
                 >
-                  Minimal & Colorful
+                  Lightning Fast
                 </h3>
-                <p style={{ color: 'var(--secondary)' }}>
-                  Clean design with vibrant colors that don&apos;t overwhelm.
+                <p className="font-light leading-relaxed" style={{ color: 'var(--secondary)' }}>
+                  Optimized performance with server-side rendering and efficient code splitting.
                 </p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={0.4}>
               <div
-                className="p-8 rounded-xl border-2 card-hover"
+                className="p-8 rounded-2xl card-hover group h-full"
                 style={{
                   backgroundColor: 'var(--card-bg)',
-                  borderColor: 'var(--border)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <div className="text-4xl mb-4">💾</div>
+                <div 
+                  className="text-4xl mb-6 w-16 h-16 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(244, 63, 94, 0.1)' }}
+                >
+                  🎨
+                </div>
                 <h3
-                  className="text-xl font-semibold mb-3"
+                  className="text-xl font-bold mb-4"
                   style={{ color: 'var(--foreground)' }}
                 >
-                  Persistent Preferences
+                  Beautiful UI
                 </h3>
-                <p style={{ color: 'var(--secondary)' }}>
-                  Your theme choice is saved and remembered across visits.
+                <p className="font-light leading-relaxed" style={{ color: 'var(--secondary)' }}>
+                  Glassmorphism, gradients, and glowing effects for a premium visual experience.
                 </p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={0.5}>
               <div
-                className="p-8 rounded-xl border-2 card-hover"
+                className="p-8 rounded-2xl card-hover group h-full"
                 style={{
                   backgroundColor: 'var(--card-bg)',
-                  borderColor: 'var(--border)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <div className="text-4xl mb-4">⚡</div>
+                <div 
+                  className="text-4xl mb-6 w-16 h-16 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(77, 162, 255, 0.1)' }}
+                >
+                  📱
+                </div>
                 <h3
-                  className="text-xl font-semibold mb-3"
+                  className="text-xl font-bold mb-4"
                   style={{ color: 'var(--foreground)' }}
                 >
-                  No Flash
+                  Responsive
                 </h3>
-                <p style={{ color: 'var(--secondary)' }}>
-                  Server-side theme detection prevents any hydration flash on load.
+                <p className="font-light leading-relaxed" style={{ color: 'var(--secondary)' }}>
+                  Perfectly adapts to any screen size, from mobile devices to ultra-wide displays.
                 </p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={0.6}>
               <div
-                className="p-8 rounded-xl border-2 card-hover"
+                className="p-8 rounded-2xl card-hover group h-full"
                 style={{
                   backgroundColor: 'var(--card-bg)',
-                  borderColor: 'var(--border)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <div className="text-4xl mb-4">🎯</div>
+                <div 
+                  className="text-4xl mb-6 w-16 h-16 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(157, 78, 221, 0.1)' }}
+                >
+                  🎯
+                </div>
                 <h3
-                  className="text-xl font-semibold mb-3"
+                  className="text-xl font-bold mb-4"
                   style={{ color: 'var(--foreground)' }}
                 >
                   Modern Stack
                 </h3>
-                <p style={{ color: 'var(--secondary)' }}>
-                  Built with Next.js 16, TypeScript, and Tailwind CSS 4.
+                <p className="font-light leading-relaxed" style={{ color: 'var(--secondary)' }}>
+                  Built with Next.js 16, TypeScript, Tailwind CSS 4, and Framer Motion.
                 </p>
               </div>
             </ScrollReveal>
@@ -153,38 +206,50 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-24 md:py-32">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-8 text-center"
-              style={{ color: 'var(--foreground)' }}
-            >
-              About This Project
-            </h2>
+            <div className="text-center mb-12">
+              <span 
+                className="inline-block px-4 py-2 rounded-full text-sm font-medium tracking-wide uppercase mb-6"
+                style={{ 
+                  background: 'rgba(77, 162, 255, 0.1)',
+                  border: '1px solid rgba(77, 162, 255, 0.3)',
+                  color: 'var(--primary)'
+                }}
+              >
+                About
+              </span>
+              <h2
+                className="text-4xl md:text-6xl font-bold text-gradient"
+              >
+                About This Project
+              </h2>
+            </div>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
             <div
-              className="p-12 rounded-xl border-2"
+              className="p-10 md:p-14 rounded-3xl backdrop-blur-xl"
               style={{
-                backgroundColor: 'var(--card-bg)',
-                borderColor: 'var(--border)',
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
               }}
             >
               <p
-                className="text-lg leading-relaxed mb-6"
+                className="text-lg md:text-xl leading-relaxed mb-6 font-light"
                 style={{ color: 'var(--foreground)' }}
               >
-                BrandNewPortfolio is designed to be a complete portfolio platform that adapts
-                to different contexts and moods. Whether you&apos;re presenting work to potential
-                clients or showcasing your creative side, this platform has you covered.
+                This portfolio showcases a modern, premium web experience inspired by cutting-edge 
+                design principles. Featuring smooth animations, glassmorphism effects, and a 
+                sophisticated dark theme with vibrant accent colors.
               </p>
               <p
-                className="text-lg leading-relaxed"
+                className="text-lg md:text-xl leading-relaxed font-light"
                 style={{ color: 'var(--secondary)' }}
               >
-                Future sprints will add a rich text editor, database integration, content
-                management features, and more. Stay tuned for updates!
+                Built with the latest web technologies, this platform demonstrates expertise in 
+                creating immersive digital experiences that captivate users and deliver exceptional 
+                performance across all devices.
               </p>
             </div>
           </ScrollReveal>
@@ -192,23 +257,55 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-24 md:py-32">
-        <div className="max-w-2xl mx-auto text-center">
+      <section className="container mx-auto px-4 py-24 md:py-40 relative">
+        {/* CTA glow */}
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] -z-10 opacity-30"
+          style={{
+            background: 'radial-gradient(ellipse, var(--primary) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        
+        <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
             <h2
-              className="text-3xl md:text-4xl font-bold mb-6"
-              style={{ color: 'var(--foreground)' }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-gradient"
             >
-              Ready to Explore?
+              Ready to Build Something Amazing?
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
             <p
-              className="text-lg mb-8"
+              className="text-lg md:text-xl mb-12 font-light"
               style={{ color: 'var(--secondary)' }}
             >
-              Try switching between themes to see how the design adapts.
+              Let&apos;s collaborate and create digital experiences that stand out.
             </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.4}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                className="glow-button px-10 py-5 rounded-full font-semibold text-lg transition-all hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
+                  color: '#ffffff',
+                  boxShadow: '0 15px 50px -15px var(--glow-color)',
+                }}
+              >
+                Start a Project
+              </button>
+              <button
+                className="px-10 py-5 rounded-full font-semibold text-lg transition-all hover:scale-105 hover:bg-white/10"
+                style={{
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  color: 'var(--foreground)',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                }}
+              >
+                View Resume
+              </button>
+            </div>
           </ScrollReveal>
         </div>
       </section>

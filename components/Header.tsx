@@ -12,7 +12,6 @@ const navLinks = [
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
-  { href: '/admin', label: 'Admin' },
 ];
 
 export function Header() {
@@ -39,30 +38,30 @@ export function Header() {
         mass: 1,
         duration: 0.8,
       }}
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4"
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4"
     >
       <nav
         className={`
-          backdrop-blur-lg
+          backdrop-blur-xl
           rounded-full
-          px-6 py-2.5
+          px-8 py-3
           border
-          shadow-lg
           transition-all
-          duration-300
+          duration-500
           ${isScrolled ? 'navbar-scrolled' : ''}
         `}
         style={{
-          backgroundColor: 'rgba(var(--background-rgb), 0.7)',
-          borderColor: 'var(--border)',
+          backgroundColor: isScrolled ? 'rgba(3, 0, 20, 0.85)' : 'rgba(255, 255, 255, 0.03)',
+          borderColor: isScrolled ? 'rgba(77, 162, 255, 0.3)' : 'rgba(255, 255, 255, 0.1)',
+          boxShadow: isScrolled ? '0 8px 32px -4px rgba(77, 162, 255, 0.15)' : 'none',
         }}
       >
-        <ul className="flex items-center gap-6">
+        <ul className="flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`text-sm font-medium transition-all hover:scale-105 ${
+                className={`text-sm font-medium transition-all duration-300 hover:text-[var(--primary)] ${
                   pathname === link.href ? 'active-link' : ''
                 }`}
                 style={{
@@ -73,7 +72,7 @@ export function Header() {
               </Link>
             </li>
           ))}
-          <li className="border-l pl-4" style={{ borderColor: 'var(--border)' }}>
+          <li className="border-l pl-6 ml-2" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
             <ThemeToggle />
           </li>
         </ul>

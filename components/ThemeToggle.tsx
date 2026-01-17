@@ -8,17 +8,20 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="theme-toggle px-3 py-1.5 rounded-full text-sm font-medium transition-all hover:scale-105"
+      className="theme-toggle px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
       style={{
-        backgroundColor: 'var(--card-bg)',
-        borderColor: 'var(--border)',
+        background: theme === 'professional' 
+          ? 'rgba(77, 162, 255, 0.1)' 
+          : 'rgba(167, 139, 250, 0.1)',
+        border: `1px solid ${theme === 'professional' 
+          ? 'rgba(77, 162, 255, 0.3)' 
+          : 'rgba(167, 139, 250, 0.3)'}`,
         color: 'var(--foreground)',
-        border: '1px solid',
       }}
       aria-label={`Switch to ${theme === 'professional' ? 'playful' : 'professional'} theme`}
       type="button"
     >
-      {theme === 'professional' ? '🎨' : '💼'}
+      {theme === 'professional' ? '✨ Playful' : '💼 Pro'}
     </button>
   );
 }
