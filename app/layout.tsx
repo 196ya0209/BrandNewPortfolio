@@ -6,6 +6,10 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PlayfulShapes } from "@/components/PlayfulShapes";
 import { LoadingScreen } from "@/components/LoadingScreen";
+import { LenisProvider } from "@/components/LenisProvider";
+import { PortfolioHeader } from "@/components/PortfolioHeader";
+import { CapsuleNav } from "@/components/CapsuleNav";
+import { TravelingObject3D } from "@/components/TravelingObject3D";
 import { getThemeFromCookie, type Theme } from "@/lib/theme";
 
 export const metadata: Metadata = {
@@ -30,13 +34,17 @@ export default async function RootLayout({
           Skip to main content
         </a>
         <ThemeProvider initialTheme={theme}>
-          <LoadingScreen />
-          <PlayfulShapes />
-          <Header />
-          <main id="main-content">
-            {children}
-          </main>
-          <Footer />
+          <LenisProvider>
+            <LoadingScreen />
+            <PlayfulShapes />
+            <PortfolioHeader />
+            <CapsuleNav />
+            <TravelingObject3D />
+            <main id="main-content">
+              {children}
+            </main>
+            <Footer />
+          </LenisProvider>
         </ThemeProvider>
       </body>
     </html>

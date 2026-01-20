@@ -44,7 +44,7 @@ html[data-theme="playful"] {
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Smooth scroll is handled by Lenis */
 }
 
 body {
