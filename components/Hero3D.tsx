@@ -30,51 +30,54 @@ export function Hero3D() {
     }
   }, []);
 
-  const name = "196ya0209";
-  const characters = name.split('');
+  const title = "Full-Stack Developer";
+  const words = title.split(' ');
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex items-center justify-center pt-20">
+    <div id="hero" ref={containerRef} className="relative w-full h-screen min-h-[100vh] overflow-hidden flex items-center justify-center pt-20">
       <div className="max-w-7xl mx-auto text-center px-4 z-10">
-        {/* Animated Name - Much Larger */}
+        {/* Animated Title - Much Larger */}
         <div className="mb-12">
           <h1
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[12rem] font-bold mb-8 leading-[0.9] overflow-hidden"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-8 leading-[0.9] overflow-hidden"
             style={{ fontFamily: 'var(--hero-font)' }}
           >
-            {characters.map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 100 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
-                transition={{
-                  duration: 0.8,
-                  delay: index * 0.08,
-                  ease: [0.25, 0.4, 0.25, 1],
-                }}
-                className="inline-block hover:text-[var(--primary)] transition-colors duration-300"
-                style={{ color: 'var(--foreground)' }}
-              >
-                {char}
-              </motion.span>
+            {words.map((word, wordIndex) => (
+              <span key={wordIndex} className="inline-block mr-6">
+                {word.split('').map((char, charIndex) => (
+                  <motion.span
+                    key={`${wordIndex}-${charIndex}`}
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+                    transition={{
+                      duration: 0.8,
+                      delay: (wordIndex * word.length + charIndex) * 0.05,
+                      ease: [0.25, 0.4, 0.25, 1],
+                    }}
+                    className="inline-block hover:text-[var(--primary)] transition-colors duration-300"
+                    style={{ color: 'var(--foreground)' }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </span>
             ))}
           </h1>
         </div>
 
-        {/* Subtitle - Larger and More Prominent */}
+        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{
             duration: 1,
-            delay: 0.8,
+            delay: 1.2,
             ease: [0.25, 0.4, 0.25, 1],
           }}
-          className="text-2xl md:text-4xl leading-relaxed max-w-4xl mx-auto font-medium"
+          className="text-xl md:text-3xl leading-relaxed max-w-4xl mx-auto font-medium"
           style={{ color: 'var(--secondary)' }}
         >
-          A dual-mode portfolio platform that adapts to your mood. Switch between
-          Professional and Playful themes using the toggle above.
+          Building modern, scalable web applications with passion and precision ✨
         </motion.p>
 
         {/* Decorative animated background glow */}
