@@ -9,6 +9,7 @@ interface SmoothScrollProps {
 
 export function SmoothScroll({ children }: SmoothScrollProps) {
   const lenisRef = useRef<Lenis | null>(null);
+  const rafIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     // Initialize Lenis
@@ -26,13 +27,16 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     // Animation loop
     function raf(time: number) {
       lenisRef.current?.raf(time);
-      requestAnimationFrame(raf);
+      rafIdRef.current = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafIdRef.current = requestAnimationFrame(raf);
 
     // Cleanup
     return () => {
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
       lenisRef.current?.destroy();
     };
   }, []);

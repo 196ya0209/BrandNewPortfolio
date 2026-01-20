@@ -1,17 +1,26 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export function Marquee() {
   const text = "FULL-STACK DEVELOPER • CREATIVE CODER • PROBLEM SOLVER • WEB ENTHUSIAST • ";
   const repeatedText = text.repeat(3);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const [textWidth, setTextWidth] = useState(0);
+
+  useEffect(() => {
+    if (textRef.current) {
+      setTextWidth(textRef.current.offsetWidth / 3);
+    }
+  }, []);
 
   return (
     <div className="py-8 overflow-hidden border-y" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--muted)' }}>
       <motion.div
         className="flex whitespace-nowrap"
         animate={{
-          x: [0, -1 * (text.length * 12)], // Approximate width calculation
+          x: textWidth > 0 ? [0, -textWidth] : [0, -1000],
         }}
         transition={{
           x: {
@@ -22,7 +31,7 @@ export function Marquee() {
           },
         }}
       >
-        <span className="text-2xl md:text-4xl font-bold pr-4" style={{ color: 'var(--primary)' }}>
+        <span ref={textRef} className="text-2xl md:text-4xl font-bold pr-4" style={{ color: 'var(--primary)' }}>
           {repeatedText}
         </span>
       </motion.div>

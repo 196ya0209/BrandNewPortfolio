@@ -55,19 +55,19 @@ export function AboutSection() {
             style={{ color: 'var(--foreground)' }}
           >
             <p>
-              Hey there! 👋 I'm a passionate full-stack developer who loves creating 
+              Hey there! 👋 I&apos;m a passionate full-stack developer who loves creating 
               amazing web experiences ✨. I believe in writing clean, maintainable code 
               that makes both users and developers happy 😊.
             </p>
             <p>
               My journey in tech has been fueled by curiosity 🔍 and a love for solving 
-              complex problems 🧩. Whether it's building sleek UIs with React or crafting 
-              robust backend systems, I'm always excited to learn something new 🚀.
+              complex problems 🧩. Whether it&apos;s building sleek UIs with React or crafting 
+              robust backend systems, I&apos;m always excited to learn something new 🚀.
             </p>
             <p>
-              When I'm not coding 💻, you might find me exploring the latest web technologies 🌐, 
+              When I&apos;m not coding 💻, you might find me exploring the latest web technologies 🌐, 
               contributing to open source 🤝, or brainstorming the next big idea 💡. 
-              Let's build something amazing together! 🎯
+              Let&apos;s build something amazing together! 🎯
             </p>
           </motion.div>
 

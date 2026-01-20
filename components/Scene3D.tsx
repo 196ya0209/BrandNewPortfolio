@@ -35,16 +35,24 @@ export function Scene3D() {
   const canvasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ticking = false;
+
     // Sync 3D position with scroll
     const handleScroll = () => {
-      if (canvasRef.current) {
-        const scrollProgress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-        const yOffset = scrollProgress * 100;
-        canvasRef.current.style.transform = `translateY(${yOffset}vh)`;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (canvasRef.current) {
+            const scrollProgress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            const yOffset = scrollProgress * 100;
+            canvasRef.current.style.transform = `translateY(${yOffset}vh)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

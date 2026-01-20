@@ -1,7 +1,7 @@
 'use client';
 
 export function TopHeaderBar() {
-  const currentDate = '2026-01-20';
+  const currentDate = new Date().toISOString().split('T')[0];
 
   return (
     <div 
