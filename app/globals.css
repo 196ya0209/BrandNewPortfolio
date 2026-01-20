@@ -2,6 +2,27 @@
 @import url('https://api.fontshare.com/v2/css?f[]=supreme@400,700&display=swap');
 @import "tailwindcss";
 
+/* Lenis Smooth Scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
 /* Theme CSS Variables - Professional is default */
 html[data-theme="professional"] {
   --background: #ffffff;
