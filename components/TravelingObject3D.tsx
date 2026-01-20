@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 function TravelingShape() {

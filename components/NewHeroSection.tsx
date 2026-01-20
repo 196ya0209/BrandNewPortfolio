@@ -1,15 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 export function NewHeroSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
   const title = 'Full-Stack Developer';
   const words = title.split(' ');
 
@@ -38,7 +31,7 @@ export function NewHeroSection() {
                     <motion.span
                       key={charIndex}
                       initial={{ y: '100%', opacity: 0 }}
-                      animate={isLoaded ? { y: 0, opacity: 1 } : { y: '100%', opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
                       transition={{
                         duration: 0.8,
                         delay: (wordIndex * word.length + charIndex) * 0.05,
@@ -64,7 +57,7 @@ export function NewHeroSection() {
           {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
             className="text-xl md:text-3xl max-w-3xl mx-auto"
             style={{ color: 'var(--secondary)' }}
@@ -75,7 +68,7 @@ export function NewHeroSection() {
           {/* Decorative elements */}
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
-            animate={isLoaded ? { scale: 1, opacity: 0.1 } : { scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.1 }}
             transition={{ duration: 1.5, delay: 0.5, ease: 'easeOut' }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl pointer-events-none -z-10"
             style={{ backgroundColor: 'var(--primary)' }}

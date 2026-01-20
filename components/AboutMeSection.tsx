@@ -5,6 +5,20 @@ import { useRef } from 'react';
 
 const floatingEmojis = ['🚀', '💻', '⚡', '🎨', '🔥', '✨', '🌟', '💡', '🎯', '🏆'];
 
+// Pre-computed animation values to avoid Math.random in render
+const emojiAnimations = [
+  { x: 30, y: -20, duration: 4.5 },
+  { x: -40, y: 25, duration: 3.8 },
+  { x: 15, y: -35, duration: 4.2 },
+  { x: -25, y: 40, duration: 3.5 },
+  { x: 45, y: -15, duration: 4.8 },
+  { x: -30, y: 30, duration: 4.0 },
+  { x: 20, y: -40, duration: 3.7 },
+  { x: -45, y: 20, duration: 4.3 },
+  { x: 35, y: -25, duration: 3.9 },
+  { x: -20, y: 35, duration: 4.6 },
+];
+
 export function AboutMeSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
@@ -28,11 +42,11 @@ export function AboutMeSection() {
           animate={isInView ? {
             opacity: [0.3, 0.6, 0.3],
             scale: [1, 1.2, 1],
-            x: [0, Math.random() * 100 - 50, 0],
-            y: [0, Math.random() * 100 - 50, 0],
+            x: [0, emojiAnimations[index].x, 0],
+            y: [0, emojiAnimations[index].y, 0],
           } : { opacity: 0, scale: 0 }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: emojiAnimations[index].duration,
             delay: index * 0.2,
             repeat: Infinity,
             repeatType: 'reverse',
