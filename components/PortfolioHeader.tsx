@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ThemeToggle } from './ThemeToggle';
 
 export function PortfolioHeader() {
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -24,7 +25,10 @@ export function PortfolioHeader() {
       <div className="flex justify-between items-center text-xs font-medium">
         <span style={{ color: 'var(--secondary)' }}>PORTFOLIO</span>
         <span style={{ color: 'var(--foreground)' }}>Achchutha Rengan</span>
-        <span style={{ color: 'var(--secondary)' }}>{currentDate}</span>
+        <div className="flex items-center gap-3">
+          <span style={{ color: 'var(--secondary)' }}>{currentDate}</span>
+          <ThemeToggle />
+        </div>
       </div>
     </motion.div>
   );

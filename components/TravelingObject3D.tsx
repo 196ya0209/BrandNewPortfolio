@@ -1,21 +1,28 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 function TravelingShape() {
   const meshRef = useRef<THREE.Mesh>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scroll = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(scroll / maxScroll);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   useFrame((state) => {
     if (meshRef.current) {
-      // Get scroll position
-      const scroll = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollProgress = scroll / maxScroll;
-      
-      // Move object based on scroll
+      // Use cached scroll progress instead of accessing DOM
       meshRef.current.position.y = -scrollProgress * 10 + 2;
       meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.3;
       meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.2;
