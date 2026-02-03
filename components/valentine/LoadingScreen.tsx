@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { colors, gradients } from '@/lib/valentine-colors';
+
+// Dynamic import for 3D elements to avoid SSR issues
+const Floating3DElements = dynamic(() => import('./Floating3DElements'), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -19,10 +26,10 @@ const OrbitingHeart = ({ index, total }: { index: number; total: number }) => {
   const angle = (index / total) * 360;
   return (
     <motion.div
-      className="absolute text-2xl"
+      className="absolute text-xl sm:text-2xl md:text-3xl"
       style={{
-        width: 320,
-        height: 320,
+        width: 'min(320px, 80vw)',
+        height: 'min(320px, 80vw)',
       }}
       animate={{ rotate: 360 }}
       transition={{
@@ -87,11 +94,20 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center"
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-center overflow-hidden px-4"
       style={{ background: gradients.darkPink }}
     >
+      {/* 3D Floating Elements Background */}
+      <Floating3DElements 
+        heartCount={12}
+        starCount={8}
+        sparkleCount={20}
+        ringCount={4}
+        spread={9}
+      />
+
       {/* Photo container with orbiting hearts */}
-      <div className="relative flex items-center justify-center mb-12">
+      <div className="relative flex items-center justify-center mb-8 sm:mb-12">
         {/* Orbiting hearts */}
         {[...Array(6)].map((_, i) => (
           <OrbitingHeart key={i} index={i} total={6} />
@@ -101,8 +117,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         <motion.div
           className="relative rounded-full flex items-center justify-center"
           style={{
-            width: 280,
-            height: 280,
+            width: 'min(280px, 70vw)',
+            height: 'min(280px, 70vw)',
             background: gradients.primary,
             padding: 4,
           }}
@@ -116,7 +132,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           transition={{ duration: 2, repeat: Infinity }}
         >
           <div
-            className="w-full h-full rounded-full flex items-center justify-center text-6xl"
+            className="w-full h-full rounded-full flex items-center justify-center text-4xl sm:text-5xl md:text-6xl"
             style={{ background: colors.darkBg }}
           >
             💕
@@ -130,9 +146,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="text-2xl mb-8 text-center px-4"
+        className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-center px-4 relative z-10"
         style={{
-          fontFamily: 'var(--font-dancing-script)',
+          fontFamily: "'Dancing Script', cursive",
           color: colors.lightPink,
         }}
       >
@@ -141,7 +157,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
       {/* Progress bar */}
       <div
-        className="w-64 h-3 rounded-full overflow-hidden"
+        className="w-48 sm:w-64 h-2 sm:h-3 rounded-full overflow-hidden relative z-10"
         style={{ background: colors.darkSurface }}
       >
         <motion.div
@@ -154,10 +170,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       </div>
 
       <p
-        className="mt-4 text-sm"
+        className="mt-3 sm:mt-4 text-xs sm:text-sm relative z-10"
         style={{
           color: colors.lightPink,
-          fontFamily: 'var(--font-inter)',
+          fontFamily: "'Inter', sans-serif",
         }}
       >
         {Math.round(progress)}%

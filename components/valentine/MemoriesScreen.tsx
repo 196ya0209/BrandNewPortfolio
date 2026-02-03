@@ -2,7 +2,14 @@
 
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { colors, gradients } from '@/lib/valentine-colors';
+
+// Dynamic import for 3D elements to avoid SSR issues
+const Floating3DElements = dynamic(() => import('./Floating3DElements'), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface MemoriesScreenProps {
   onProceed: () => void;
@@ -22,10 +29,10 @@ const memories = [
 function PolaroidCard({ memory, index }: { memory: typeof memories[0]; index: number }) {
   return (
     <motion.div
-      className="flex-shrink-0 p-4 rounded-lg shadow-2xl cursor-pointer"
+      className="flex-shrink-0 p-3 sm:p-4 rounded-lg shadow-2xl cursor-pointer"
       style={{
         background: colors.cream,
-        width: 280,
+        width: 'min(280px, 70vw)',
         rotate: `${memory.rotation}deg`,
       }}
       initial={{ opacity: 0, y: 50 }}
@@ -40,7 +47,7 @@ function PolaroidCard({ memory, index }: { memory: typeof memories[0]; index: nu
     >
       {/* Photo placeholder */}
       <div
-        className="w-full aspect-square rounded flex items-center justify-center text-6xl"
+        className="w-full aspect-square rounded flex items-center justify-center text-4xl sm:text-5xl md:text-6xl"
         style={{
           background: gradients.soft,
         }}
@@ -49,9 +56,9 @@ function PolaroidCard({ memory, index }: { memory: typeof memories[0]; index: nu
       </div>
       {/* Caption */}
       <p
-        className="mt-4 text-center text-lg"
+        className="mt-3 sm:mt-4 text-center text-sm sm:text-base md:text-lg"
         style={{
-          fontFamily: 'var(--font-dancing-script)',
+          fontFamily: "'Dancing Script', cursive",
           color: colors.darkBg,
         }}
       >
@@ -68,30 +75,41 @@ export default function MemoriesScreen({ onProceed }: MemoriesScreenProps) {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen flex flex-col"
+      className="fixed inset-0 w-full h-full flex flex-col overflow-hidden"
       style={{ background: gradients.darkPink }}
     >
+      {/* 3D Floating Elements Background */}
+      <Floating3DElements 
+        heartCount={10}
+        starCount={6}
+        sparkleCount={15}
+        ringCount={3}
+        spread={8}
+      />
+
       {/* Header */}
       <motion.div
-        className="text-center py-12"
+        className="text-center py-8 sm:py-12 px-4 relative z-10 flex-shrink-0"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <h2
-          className="text-4xl md:text-5xl mb-4"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-2 sm:mb-4"
           style={{
-            fontFamily: 'var(--font-great-vibes)',
+            fontFamily: "'Great Vibes', cursive",
             background: gradients.primary,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            filter: `drop-shadow(0 0 20px ${colors.primaryPink}66)`,
           }}
         >
           Our Beautiful Memories 💕
         </h2>
         <p
-          className="text-lg"
+          className="text-base sm:text-lg"
           style={{
-            fontFamily: 'var(--font-dancing-script)',
+            fontFamily: "'Dancing Script', cursive",
             color: colors.lightPink,
           }}
         >
@@ -102,26 +120,26 @@ export default function MemoriesScreen({ onProceed }: MemoriesScreenProps) {
       {/* Horizontal scroll gallery */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-x-auto overflow-y-hidden scrollbar-hide"
+        className="flex-1 overflow-x-auto overflow-y-hidden scrollbar-hide relative z-10"
         style={{
           scrollBehavior: 'smooth',
           WebkitOverflowScrolling: 'touch',
         }}
       >
-        <div className="flex gap-8 px-12 py-8 min-w-max items-center h-full">
+        <div className="flex gap-4 sm:gap-6 md:gap-8 px-6 sm:px-12 py-4 sm:py-8 min-w-max items-center h-full">
           {memories.map((memory, index) => (
             <PolaroidCard key={memory.id} memory={memory} index={index} />
           ))}
           
           {/* End card with proceed button */}
           <motion.div
-            className="flex-shrink-0 flex flex-col items-center justify-center p-8"
-            style={{ width: 300 }}
+            className="flex-shrink-0 flex flex-col items-center justify-center p-6 sm:p-8"
+            style={{ width: 'min(300px, 80vw)' }}
           >
             <motion.p
-              className="text-2xl mb-6 text-center"
+              className="text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6 text-center"
               style={{
-                fontFamily: 'var(--font-dancing-script)',
+                fontFamily: "'Dancing Script', cursive",
                 color: colors.lightPink,
               }}
               animate={{ opacity: [0.5, 1, 0.5] }}
@@ -131,10 +149,10 @@ export default function MemoriesScreen({ onProceed }: MemoriesScreenProps) {
             </motion.p>
             <motion.button
               onClick={onProceed}
-              className="px-8 py-4 rounded-full text-white font-semibold"
+              className="px-6 sm:px-8 py-3 sm:py-4 rounded-full text-white font-semibold text-sm sm:text-base"
               style={{
                 background: gradients.primary,
-                fontFamily: 'var(--font-inter)',
+                fontFamily: "'Inter', sans-serif",
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -147,12 +165,12 @@ export default function MemoriesScreen({ onProceed }: MemoriesScreenProps) {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20 text-sm sm:text-base"
         animate={{ x: [0, 10, 0] }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
         <span style={{ color: colors.lightPink }}>Scroll</span>
-        <span>→</span>
+        <span style={{ color: colors.lightPink }}>→</span>
       </motion.div>
     </div>
   );

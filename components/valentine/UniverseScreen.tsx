@@ -195,16 +195,40 @@ export default function UniverseScreen({ onProceed }: UniverseScreenProps) {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen relative"
+      className="fixed inset-0 w-full h-full overflow-hidden"
       style={{ background: colors.darkBg }}
     >
-      <Canvas camera={{ position: [0, 0, 12], fov: 60 }}>
-        <Scene progress={progress} hoveredGem={hoveredGem} onGemHover={setHoveredGem} />
-      </Canvas>
+      {/* 3D Canvas - fills entire screen */}
+      <div className="absolute inset-0 w-full h-full">
+        <Canvas 
+          camera={{ position: [0, 0, 12], fov: 60 }}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <Scene progress={progress} hoveredGem={hoveredGem} onGemHover={setHoveredGem} />
+        </Canvas>
+      </div>
+
+      {/* Title */}
+      <motion.h2
+        className="absolute top-6 sm:top-8 left-1/2 -translate-x-1/2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center px-4 whitespace-nowrap"
+        style={{
+          fontFamily: "'Great Vibes', cursive",
+          background: gradients.primary,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          filter: `drop-shadow(0 0 20px ${colors.primaryPink}66)`,
+        }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1 }}
+      >
+        Your Name in the Stars ✨
+      </motion.h2>
 
       {/* Overlay */}
       <motion.div
-        className="absolute inset-0 flex flex-col items-center justify-end pb-20 pointer-events-none"
+        className="absolute inset-0 flex flex-col items-center justify-end pb-16 sm:pb-20 pointer-events-none px-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
@@ -213,16 +237,16 @@ export default function UniverseScreen({ onProceed }: UniverseScreenProps) {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute top-1/4 px-6 py-3 rounded-full"
+            className="absolute top-1/4 px-4 sm:px-6 py-2 sm:py-3 rounded-full"
             style={{
               background: `${colors.darkSurface}dd`,
               border: `1px solid ${colors.primaryPink}`,
             }}
           >
             <p
-              className="text-2xl"
+              className="text-lg sm:text-xl md:text-2xl"
               style={{
-                fontFamily: 'var(--font-dancing-script)',
+                fontFamily: "'Dancing Script', cursive",
                 color: colors.primaryPink,
               }}
             >
@@ -233,10 +257,10 @@ export default function UniverseScreen({ onProceed }: UniverseScreenProps) {
 
         <motion.button
           onClick={onProceed}
-          className="px-8 py-4 rounded-full pointer-events-auto"
+          className="px-6 sm:px-8 py-3 sm:py-4 rounded-full pointer-events-auto text-sm sm:text-base text-white font-semibold"
           style={{
             background: gradients.primary,
-            fontFamily: 'var(--font-inter)',
+            fontFamily: "'Inter', sans-serif",
           }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -245,22 +269,6 @@ export default function UniverseScreen({ onProceed }: UniverseScreenProps) {
           Continue to Memories 💕
         </motion.button>
       </motion.div>
-
-      {/* Title */}
-      <motion.h2
-        className="absolute top-8 left-1/2 -translate-x-1/2 text-3xl md:text-4xl"
-        style={{
-          fontFamily: 'var(--font-great-vibes)',
-          background: gradients.primary,
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-      >
-        Your Name in the Stars ✨
-      </motion.h2>
     </div>
   );
 }

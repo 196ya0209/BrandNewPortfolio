@@ -2,7 +2,14 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { colors, gradients } from '@/lib/valentine-colors';
+
+// Dynamic import for 3D elements to avoid SSR issues
+const Floating3DElements = dynamic(() => import('./Floating3DElements'), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface PasswordScreenProps {
   onSuccess: () => void;
@@ -10,7 +17,7 @@ interface PasswordScreenProps {
 
 const FloatingHeart = ({ delay, left }: { delay: number; left: string }) => (
   <motion.div
-    className="absolute text-2xl pointer-events-none select-none"
+    className="absolute text-xl sm:text-2xl md:text-3xl pointer-events-none select-none"
     style={{ left }}
     initial={{ bottom: -50, opacity: 0 }}
     animate={{
@@ -19,7 +26,7 @@ const FloatingHeart = ({ delay, left }: { delay: number; left: string }) => (
       x: [0, 30, -30, 0],
     }}
     transition={{
-      duration: 8,
+      duration: 10,
       delay,
       repeat: Infinity,
       ease: 'linear',
@@ -69,23 +76,32 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
     }
   };
 
-  const hearts = Array.from({ length: 15 }, (_, i) => ({
-    delay: i * 0.5,
-    left: `${(i * 7) % 100}%`,
+  const hearts = Array.from({ length: 20 }, (_, i) => ({
+    delay: i * 0.4,
+    left: `${(i * 5) % 100}%`,
   }));
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      className="fixed inset-0 w-full h-full flex items-center justify-center overflow-hidden"
       style={{ background: gradients.darkPink }}
     >
-      {/* Floating hearts background */}
+      {/* 3D Floating Elements Background */}
+      <Floating3DElements 
+        heartCount={15}
+        starCount={10}
+        sparkleCount={25}
+        ringCount={5}
+        spread={10}
+      />
+
+      {/* 2D Floating hearts background */}
       {hearts.map((heart, i) => (
         <FloatingHeart key={i} delay={heart.delay} left={heart.left} />
       ))}
 
       <motion.div
-        className="relative z-10 text-center p-8 rounded-3xl"
+        className="relative z-10 text-center p-6 sm:p-8 md:p-10 rounded-3xl mx-4 max-w-sm sm:max-w-md w-full"
         style={{
           background: 'rgba(26, 26, 26, 0.9)',
           backdropFilter: 'blur(20px)',
@@ -98,7 +114,7 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
       >
         {/* Lock/Heart Icon */}
         <motion.div
-          className="text-6xl mb-6"
+          className="text-5xl sm:text-6xl md:text-7xl mb-4 sm:mb-6"
           animate={isUnlocked ? { scale: [1, 1.3, 1], rotate: [0, 10, -10, 0] } : {}}
           transition={{ duration: 0.5 }}
         >
@@ -107,12 +123,13 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
 
         {/* Title */}
         <motion.h1
-          className="text-4xl md:text-5xl mb-8"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-6 sm:mb-8 leading-tight"
           style={{
-            fontFamily: 'var(--font-great-vibes)',
+            fontFamily: "'Great Vibes', cursive",
             background: gradients.primary,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
           }}
         >
           💕 A Special Surprise Awaits
@@ -128,14 +145,14 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
             maxLength={4}
             value={password}
             onChange={handlePasswordChange}
-            placeholder="Enter the code"
+            placeholder="Enter code"
             disabled={isUnlocked}
-            className="text-center text-2xl tracking-[0.5em] w-48 py-4 px-6 rounded-xl border-2 outline-none transition-all duration-300"
+            className="text-center text-xl sm:text-2xl tracking-[0.4em] sm:tracking-[0.5em] w-40 sm:w-48 py-3 sm:py-4 px-4 sm:px-6 rounded-xl border-2 outline-none transition-all duration-300"
             style={{
               background: colors.darkSurface,
               borderColor: shake ? '#ef4444' : colors.primaryPink,
               color: colors.white,
-              fontFamily: 'var(--font-inter)',
+              fontFamily: "'Inter', sans-serif",
             }}
             autoFocus
           />
@@ -145,10 +162,10 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
         <motion.button
           onClick={handleButtonSubmit}
           disabled={password.length < 4 || isUnlocked}
-          className="mt-6 px-10 py-4 rounded-full text-white font-semibold text-lg transition-all duration-300 disabled:opacity-50"
+          className="mt-4 sm:mt-6 px-6 sm:px-10 py-3 sm:py-4 rounded-full text-white font-semibold text-base sm:text-lg transition-all duration-300 disabled:opacity-50"
           style={{
             background: gradients.primary,
-            fontFamily: 'var(--font-inter)',
+            fontFamily: "'Inter', sans-serif",
           }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -163,10 +180,10 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="mt-4 text-sm"
+              className="mt-4 text-sm sm:text-base"
               style={{
                 color: colors.lightPink,
-                fontFamily: 'var(--font-dancing-script)',
+                fontFamily: "'Dancing Script', cursive",
               }}
             >
               Hint: A special date 💝
@@ -180,10 +197,10 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-4 text-xl"
+              className="mt-4 text-lg sm:text-xl"
               style={{
                 color: colors.primaryPink,
-                fontFamily: 'var(--font-dancing-script)',
+                fontFamily: "'Dancing Script', cursive",
               }}
             >
               Welcome, my love... 💖
