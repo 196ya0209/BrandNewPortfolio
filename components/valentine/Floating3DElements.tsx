@@ -6,6 +6,11 @@ import * as THREE from 'three';
 import { threeColors } from '@/lib/valentine-colors';
 
 // Seeded random for consistent positions
+/**
+ * Generates a pseudo-random number between 0 and 1 based on a seed value.
+ * Uses a common GLSL-based algorithm for deterministic element positioning,
+ * ensuring 3D elements appear in the same positions across renders.
+ */
 function seededRandom(seed: number): number {
   const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
   return x - Math.floor(x);

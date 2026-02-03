@@ -286,7 +286,7 @@ export default function StoryScreen({ onRestart }: StoryScreenProps) {
                   }}
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.03 }}
+                  transition={{ delay: i * 0.05 }}
                   whileHover={{
                     scale: 1.1,
                     background: colors.primaryPink,

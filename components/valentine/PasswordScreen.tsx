@@ -146,6 +146,7 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
             value={password}
             onChange={handlePasswordChange}
             placeholder="Enter code"
+            aria-label="Enter 4-digit password code"
             disabled={isUnlocked}
             className="text-center text-xl sm:text-2xl tracking-[0.4em] sm:tracking-[0.5em] w-40 sm:w-48 py-3 sm:py-4 px-4 sm:px-6 rounded-xl border-2 outline-none transition-all duration-300"
             style={{
