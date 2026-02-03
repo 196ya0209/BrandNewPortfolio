@@ -43,7 +43,7 @@ export const petNames = [
   'Coder',
   'Samsung Employee',
   'School Ppl Leader',
-  'Chutti Vikadan Cover Photo Face',
+  'Chutti Vikatan Cover Photo Face',
   'Minion',
   'Cook',
   'Double Chin Cutist',

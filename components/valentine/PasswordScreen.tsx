@@ -36,6 +36,7 @@ export default function PasswordScreen({ onSuccess }: PasswordScreenProps) {
   const [shake, setShake] = useState(false);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove non-digit characters to ensure only numbers are entered
     const newPassword = e.target.value.replace(/\D/g, '');
     setPassword(newPassword);
     // Auto-submit when 4 digits entered

@@ -28,8 +28,9 @@ body:has(.valentine-container) > div:first-of-type:not(.valentine-container) {
   display: none !important;
 }
 
-/* Hide all fixed elements from main app */
-body:has(.valentine-container) > *:not(.valentine-container):not(main):not(script):not(style) {
+/* Hide portfolio-specific elements when on Valentine page */
+body:has(.valentine-container) > div[class*="loading"],
+body:has(.valentine-container) > div[class*="playful"] {
   display: none !important;
 }
 
