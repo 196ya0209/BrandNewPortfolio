@@ -93,45 +93,55 @@ function Scene() {
 export default function PortalScreen({ onProceed }: PortalScreenProps) {
   return (
     <div
-      className="min-h-screen relative cursor-pointer"
+      className="fixed inset-0 w-full h-full cursor-pointer overflow-hidden"
       onClick={onProceed}
       style={{ background: colors.darkBg }}
     >
-      <Canvas camera={{ position: [0, 0, 8], fov: 75 }}>
-        <Scene />
-      </Canvas>
+      {/* 3D Canvas - fills entire screen */}
+      <div className="absolute inset-0 w-full h-full">
+        <Canvas 
+          camera={{ position: [0, 0, 8], fov: 75 }}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <Scene />
+        </Canvas>
+      </div>
       
-      {/* Overlay text */}
+      {/* Overlay text - centered with safe padding */}
       <motion.div
-        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-6 py-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
         <motion.h1
-          className="text-5xl md:text-7xl mb-4 text-center"
+          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-6 text-center leading-tight whitespace-nowrap"
           style={{
-            fontFamily: 'var(--font-great-vibes)',
+            fontFamily: "'Great Vibes', cursive",
             background: gradients.primary,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            textShadow: `0 0 40px ${colors.primaryPink}66`,
+            backgroundClip: 'text',
+            filter: `drop-shadow(0 0 30px ${colors.primaryPink}88)`,
+            letterSpacing: '0.02em',
           }}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
+          transition={{ delay: 0.5, duration: 1, type: 'spring', stiffness: 100 }}
         >
           Welcome, Mu ✨
         </motion.h1>
         
         <motion.p
-          className="text-xl mt-8"
+          className="text-xl sm:text-2xl md:text-3xl mt-8 text-center px-4"
           style={{
-            fontFamily: 'var(--font-dancing-script)',
+            fontFamily: "'Dancing Script', cursive",
             color: colors.lightPink,
+            textShadow: `0 0 20px ${colors.primaryPink}44`,
+            letterSpacing: '0.05em',
           }}
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
         >
           Tap to begin your journey 💕
         </motion.p>
