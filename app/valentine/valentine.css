@@ -1,0 +1,40 @@
+/* Hide main portfolio elements on Valentine page */
+.valentine-container {
+  background-color: #0a0a0a;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: Inter, system-ui, sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+/* Hide header, footer, and other elements when Valentine is active */
+.valentine-container ~ header,
+.valentine-container ~ footer,
+.valentine-container ~ .skip-to-content,
+body:has(.valentine-container) > header,
+body:has(.valentine-container) > footer,
+body:has(.valentine-container) > .skip-to-content,
+body:has(.valentine-container) > a.skip-to-content {
+  display: none !important;
+}
+
+/* Hide the main portfolio loading screen */
+body:has(.valentine-container) > div:first-of-type:not(.valentine-container) {
+  display: none !important;
+}
+
+/* Hide all fixed elements from main app */
+body:has(.valentine-container) > *:not(.valentine-container):not(main):not(script):not(style) {
+  display: none !important;
+}
+
+/* Hide playful shapes and other decorative elements */
+body:has(.valentine-container) .playful-shapes,
+body:has(.valentine-container) .loading-screen {
+  display: none !important;
+}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import './valentine.css';
 
 export const metadata: Metadata = {
   title: '💕 A Special Surprise for Amritha',
@@ -11,14 +12,7 @@ export default function ValentineLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      style={{
-        backgroundColor: '#0a0a0a',
-        minHeight: '100vh',
-        overflow: 'hidden',
-        fontFamily: 'Inter, system-ui, sans-serif',
-      }}
-    >
+    <div className="valentine-container">
       {children}
     </div>
   );
